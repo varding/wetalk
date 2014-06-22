@@ -27,7 +27,7 @@ import (
 // global settings name -> value
 type Setting struct {
 	Id      int
-	Name    string `orm:"unique"`
+	Name    string `orm:"size(100);unique"`
 	Value   string `orm:"type(text)"`
 	Updated string `orm:"auto_now"`
 }

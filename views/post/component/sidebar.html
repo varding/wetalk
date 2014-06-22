@@ -1,24 +1,58 @@
 <div class="box">
-	<div class="cell first">{{i18n .Lang "sidebar.community_news"}}</div>
+	
 	<div class="cell last slim">
-		{{if eq .Lang "en-US"}}
-		<p>Welcome, gophers!</p>
-		<p>Beego Community is finally here. You can post, share and find awesome Go resources and people in this big family.</p>
-		<p>Website is under BETA, so please report issue if any, thanks!</p>
-		{{end}}
-		{{if eq .Lang "zh-CN"}}
-		<p>欢迎各位 Go 语言爱好者！</p>
-		<p>我们很高兴地告诉您，Beego 社区上线了。您可以在这个大家庭中发布、分享并寻找给力的 Go 语言资源与大牛。</p>
-		<p>网站仍处于测试阶段，如果发现任何问题，请及时告知我们，谢谢！</p>
+		{{if .IsLogin}}
+			<div class="user-info">
+			  <a href="{{.AppUrl}}user/{{.User.UserName}}" ><img class="middle" src="{{.AvatarURL}}{{.User.GrEmail}}?size=48"></a>
+			  &nbsp;
+			  <span style="font-size:15px;"><a href="{{.AppUrl}}user/{{.User.UserName}}">{{.User.NickName}}</a></span>
+			 </div>
+			 <div class="user-stats">
+			 	<table>
+			 		<tbody>
+			 			<tr>
+			 				<td>
+			 					<a href="{{.User.Link}}/following" class="color-link-hover">
+						            <strong>{{.User.Following}}</strong><br/> <span>{{i18n .Lang "user.following"}}</span>
+						        </a>
+			 				</td>
+			 				<td>
+			 					 <a href="{{.User.Link}}/followers" class="color-link-hover">
+						            <strong>{{.User.Followers}}</strong> <br/><span>{{i18n .Lang "user.followers"}}</span>
+						        </a>
+			 				</td>
+			 				<td>
+			 					 <a href="{{.User.Link}}/favs" class="color-link-hover">
+						            <strong>{{.User.FavTopics}}</strong> <br/><span>{{i18n .Lang "user.favourite"}}</span>
+						        </a>
+			 				</td>
+			 			</tr>
+			 		</tbody>
+			 	</table>
+        	</div>
+		{{else}}
+		<div class="cell first">
+			<p><strong>{{i18n .Lang "app_name"}}</strong></p>
+			<p>{{i18n .Lang "app_intro"}}</p>
+		</div>
+		<p style="text-align:center;">
+			<a href="{{.AppUrl}}register" class="btn btn-info">{{i18n .Lang "auth.sign_register_now"}}</a>
+		</p>
+		<p style="text-align:center;">
+			{{i18n .Lang "auth.sign_in_plz"}}&nbsp;
+			<a href="{{.AppUrl}}login" style="color:#666;"><strong>{{i18n .Lang "auth.sign_in"}}</strong></a>
+		</p>
 		{{end}}
 	</div>
 </div>
+{{if .IsLogin}}
 <p>
     <a href="{{.AppUrl}}new" class="btn btn-success">
         <i class="icon-double-angle-right"></i>
         {{i18n .Lang "post.post_new"}}
     </a>
 </p>
+{{end}}
 <!-- <div class="box">
 	<div class="cell first">{{i18n .Lang "sidebar.hot_topics"}}</div>
 	<div class="cell last">Are you going to kill her? Just because I don't like her?</div>
@@ -46,6 +80,7 @@
 			<li><a target="_blank" href="http://studygolang.com">Golang China</a></li>
 			<li><a target="_blank" href="http://golangtc.com">Golang 中国</a></li>
 			<li><a target="_blank" href="http://gowalker.org">Go Walker</a></li>
+			<li><a target="_blank" href="http://bbs.go-china.org">WeTalk社区</a></li>
 		</ul>
 	</div>
 </div>

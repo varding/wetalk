@@ -139,6 +139,7 @@ func (form *PostForm) Placeholders() map[string]string {
 		"Category": "model.category_choose_dot",
 		"Topic":    "model.topic_choose_dot",
 		"Title":    "post.plz_enter_title",
+		"Content":  "post.plz_enter_content",
 	}
 }
 

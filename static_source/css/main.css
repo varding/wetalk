@@ -262,6 +262,10 @@
   padding-bottom: 15px;
 }
 
+.markdown-editor .md-toolbar{
+  margin-bottom: 5px;
+}
+
 .post-comments .comment .avatar {
   float: left;
 }
@@ -488,4 +492,19 @@
     border-radius: 0 0 3px 3px;
     -webkit-box-shadow: 1px 0 4px rgba(0, 0, 0, 0.2);
     box-shadow: 1px 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.user-stats table{
+  width:100%;
+  margin-top:20px;
+}
+.user-stats table td{
+  text-align: center;
+  border-right: 1px solid #ccc;
+}
+.user-stats table a{
+  text-decoration: none;
+}
+.user-stats table span{
+  color: #aaa;
 }

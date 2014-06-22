@@ -1,32 +1,33 @@
-	<footer id="footer">
-		<div class="container footer-wrap">
-			<p>
-				<a href="/about"><strong>{{i18n .Lang "about"}}</strong></a>
-				|
-				<a href="/faq"><strong>FAQ</strong></a>
-				|
-				<a target="_blank" href="https://github.com/beego/wetalk" target="_blank"><strong>GitHub</strong></a>
-			</p>
+<footer id="footer" class="row">
+	<div class="container footer-wrap col-md-12">
+			<div class="col-md-10" style="padding:0;">
+				<p>
+					<a href="/about"><strong>{{i18n .Lang "about"}}</strong></a>&nbsp;&nbsp;<a href="/faq"><strong>FAQ</strong></a>
+				</p>
 
-			<p>
-				{{i18n .Lang "copyright"}} © 2013 {{i18n .Lang "beego_community"}}
-			</p>
+				<p>
+					{{i18n .Lang "copyright"}} © 2014 {{i18n .Lang "beego_community"}}
+				</p>
+				
+				<p class="desc">
+					{{i18n .Lang "app_intro"}}
+					<br>
+					Version:&nbsp;{{.AppVer}} - {{.PageStartTime|loadtimes}}ms. {{i18n .Lang "powered_by"}} <a target="_blank" href="http://github.com/beego/wetalk">Wetalk</a>. {{i18n .Lang "based_on"}} <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>. {{i18n .Lang "icons_from"}} <a target="_blank" href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a>.
+				</p>
+			</div>
 			
-			<p class="desc">
-				{{i18n .Lang "footer_desc"}}
-				<br>
-				Ver.{{.AppVer}} - {{.PageStartTime|loadtimes}}ms. {{i18n .Lang "powered_by"}} <a target="_blank" href="http://beego.me">Beego</a>. {{i18n .Lang "based_on"}} <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>. {{i18n .Lang "icons_from"}} <a target="_blank" href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a>.
-			</p>
-
-			<strong>{{i18n .Lang "language_choice"}}: </strong>
-		    <div class="btn-group dropup">
-			    <button type="button" class="btn btn-default btn-md dropdown-toggle" data-toggle="dropdown">{{i18n .Lang .Lang}} <i class="caret"></i></button>
-			    <ul class="dropdown-menu">
-			    	{{range .Langs}}
-			    		<li><a href="javascript::" data-lang="{{.}}" class="lang-changed">{{i18n $.Lang .}}</a></li>
-			    	{{end}}
-			    </ul>
-		    </div>
+			<div class="col-md-2" style="padding:0;">
+				<strong>{{i18n .Lang "language_choice"}}: </strong>
+			    <div class="btn-group dropup right">
+				    <button type="button" class="btn btn-default btn-md dropdown-toggle" data-toggle="dropdown">{{i18n .Lang .Lang}} <i class="caret"></i></button>
+				    <ul class="dropdown-menu">
+				    	{{range .Langs}}
+				    		<li><a href="javascript::" data-lang="{{.}}" class="lang-changed">{{i18n $.Lang .}}</a></li>
+				    	{{end}}
+				    </ul>
+				    <input type="hidden" name="_once" value="{{.once_token}}" style="display:none;" />
+			    </div>
+			</div>
 		</div>
-		<input type="hidden" name="_once" value="{{.once_token}}" style="display:none;" />
-	</footer>
+	</div>
+</footer>

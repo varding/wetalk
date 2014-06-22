@@ -72,18 +72,18 @@ textarea.form-control {
 }
 
 #main {
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 #wrapper {
   min-height: 100% !important;
   height: auto !important;
   height: 100%;
-  margin: 0 auto -240px;
+  margin: 0 auto -140px;
 }
 
 #wrapper .wrapper-push {
-  height: 240px;
+  height: 140px;
 }
 
 #content .box,
@@ -189,7 +189,7 @@ textarea.form-control {
 /* breadcrumb */
 .breadcrumb {
   font-size: 14px;
-  background-color: #f3f3f3;
+  background-color: #fff;
   color: #666;
 }
 
