@@ -13,7 +13,7 @@
         </div>
          <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right navbar-menu">
-                <li {{if .IsHome}}class="active"{{end}}><a href="{{.AppUrl}}">{{i18n .Lang "home"}}</a></li>
+                <li><a href="{{.AppUrl}}">{{i18n .Lang "home"}}</a></li>
                 {{if .IsLogin}}
                 <li><a href="{{.User.Link}}">{{.User.NickName}}</a></li>
                 {{if .User.IsAdmin}}

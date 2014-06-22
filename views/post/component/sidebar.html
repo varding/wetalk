@@ -31,9 +31,9 @@
 			 	</table>
         	</div>
 		{{else}}
-		<div class="cell first">
+		<div class="cell first" style="margin-bottom:10px;">
 			<p><strong>{{i18n .Lang "app_name"}}</strong></p>
-			<p>{{i18n .Lang "app_intro"}}</p>
+			<p style="color:#888;">{{i18n .Lang "app_intro"}}</p>
 		</div>
 		<p style="text-align:center;">
 			<a href="{{.AppUrl}}register" class="btn btn-info">{{i18n .Lang "auth.sign_register_now"}}</a>
