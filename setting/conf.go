@@ -38,7 +38,7 @@ import (
 )
 
 const (
-	APP_VER = "1.0"
+	APP_VER = "1.0.1.2424d0a"
 )
 
 var (

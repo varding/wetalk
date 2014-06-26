@@ -23,6 +23,7 @@ import (
 	"github.com/beego/wetalk/modules/post"
 	"github.com/beego/wetalk/modules/utils"
 	"github.com/beego/wetalk/routers/base"
+	"github.com/beego/wetalk/setting"
 )
 
 // HomeRouter serves home page.
