@@ -36,6 +36,7 @@ func (this *SettingsRouter) Profile() {
 	}
 
 	form := auth.ProfileForm{Locale: this.Locale}
+
 	form.SetFromUser(&this.User)
 	this.SetFormSets(&form)
 

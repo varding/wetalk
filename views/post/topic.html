@@ -1,24 +1,24 @@
 {{template "base/base.html" .}}
 {{template "base/base_common.html" .}}
 {{define "meta"}}
-    <title>{{.Topic.GetName .Lang}} - {{i18n .Lang "app_name"}}</title>
-    <meta name="description" content="{{.Topic.GetIntro .Lang}}" />
+    <title>{{.Topic.Name}} - {{i18n .Lang "app_name"}}</title>
+    <meta name="description" content="{{.Topic.Intro}}" />
 {{end}}
 {{define "body"}}
 <div class="row">
     <div id="content" class="col-md-8">
     	<div class="box">
             <div class="cell breadcrumb first">
-                <a href="{{.AppUrl}}"><i class="icon icon-home"></i></a><i class="divider icon-angle-right"></i><a href="{{.Topic.Link}}">{{.Topic.GetName .Lang}}</a>
+                <a href="{{.AppUrl}}"><i class="icon icon-home"></i></a><i class="divider icon-angle-right"></i><a href="{{.Topic.Link}}">{{.Topic.Name}}</a>
                 <span class="pull-right">
                 </span>
             </div>
             <div class="cell topic-info">
                 <div class="topic-img pull-left">
-                    <img src="">
+                    <img src="{{.Topic.ImageLink}}">
                 </div>
                 <div class="topic-intro">
-                    {{str2html (.Topic.GetIntro .Lang)}}
+                    {{str2html (.Topic.Intro)}}
                 </div>
                 <div class="topic-meta">
                     <div class="pull-left">

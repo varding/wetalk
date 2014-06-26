@@ -22,15 +22,13 @@ import (
 )
 
 type ArticleAdminForm struct {
-	Create      bool   `form:"-"`
-	User        int    `form:"attr(rel,select2-admin-model);attr(data-model,User)" valid:"Required"`
-	LastAuthor  int    `form:"attr(rel,select2-admin-model);attr(data-model,User)" valid:""`
-	Uri         string `valid:"Required;MaxSize(60);Match(/[0-9a-z-./]+/)"`
-	Title       string `valid:"Required;MaxSize(60)"`
-	Content     string `form:"type(textarea,markdown)" valid:"Required"`
-	TitleZhCn   string `valid:"Required;MaxSize(60)"`
-	ContentZhCn string `form:"type(textarea,markdown)" valid:"Required"`
-	IsPublish   bool   ``
+	Create     bool   `form:"-"`
+	User       int    `form:"attr(rel,select2-admin-model);attr(data-model,User)" valid:"Required"`
+	LastAuthor int    `form:"attr(rel,select2-admin-model);attr(data-model,User)" valid:""`
+	Uri        string `valid:"Required;MaxSize(60);Match(/[0-9a-z-./]+/)"`
+	Title      string `valid:"Required;MaxSize(60)"`
+	Content    string `form:"type(textarea,markdown)" valid:"Required"`
+	IsPublish  bool   ``
 }
 
 func (form *ArticleAdminForm) Valid(v *validation.Validation) {
@@ -66,5 +64,4 @@ func (form *ArticleAdminForm) SetToArticle(article *models.Article) {
 	article.LastAuthor.Id = form.LastAuthor
 
 	article.ContentCache = utils.RenderMarkdown(article.Content)
-	article.ContentCacheZhCn = utils.RenderMarkdown(article.ContentZhCn)
 }

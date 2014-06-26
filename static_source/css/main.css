@@ -185,15 +185,14 @@
 }
 
 .topic-info .topic-img {
-  margin: 0 15px 0;
+  margin-right: 15px;
 }
 
 .topic-info .topic-img img {
-  width: 60px;
+  width: 80px;
 }
 
 .topic-info .topic-intro {
-  text-indent: 2em;
   margin: 0 10px 0 90px;
   margin-bottom: 0;
   font-size: 14px;

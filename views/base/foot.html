@@ -1,24 +1,22 @@
 <footer id="footer" class="row">
-	<div class="container footer-wrap col-md-12">
-			<div class="col-md-10" style="padding:0;">
+	<div class="container footer-wrap">
+			<div>
 				<p>
 					<a href="/about"><strong>{{i18n .Lang "about"}}</strong></a>&nbsp;&nbsp;<a href="/faq"><strong>FAQ</strong></a>
 				</p>
-
+				<p>
+					<strong>{{i18n .Lang "app_intro"}}</strong>
+				</p>
 				<p>
 					{{i18n .Lang "copyright"}} © 2014 {{i18n .Lang "beego_community"}}
 				</p>
-				
 				<p class="desc">
-					{{i18n .Lang "app_intro"}}
-					<br>
-					Version:&nbsp;{{.AppVer}} - {{.PageStartTime|loadtimes}}ms. {{i18n .Lang "powered_by"}} <a target="_blank" href="http://github.com/beego/wetalk">Wetalk</a>. {{i18n .Lang "based_on"}} <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>. {{i18n .Lang "icons_from"}} <a target="_blank" href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a>.
+					Version:&nbsp;{{.AppVer}} - {{.PageStartTime|loadtimes}}ms. 
 				</p>
 			</div>
-			
-			<div class="col-md-2" style="padding:0;">
-				<strong>{{i18n .Lang "language_choice"}}: </strong>
-			    <div class="btn-group dropup right">
+			<!--
+			<div class="col-md-1">
+			    <div class="btn-group dropup">
 				    <button type="button" class="btn btn-default btn-md dropdown-toggle" data-toggle="dropdown">{{i18n .Lang .Lang}} <i class="caret"></i></button>
 				    <ul class="dropdown-menu">
 				    	{{range .Langs}}
@@ -27,7 +25,7 @@
 				    </ul>
 				    <input type="hidden" name="_once" value="{{.once_token}}" style="display:none;" />
 			    </div>
-			</div>
+			</div>-->
 		</div>
 	</div>
 </footer>

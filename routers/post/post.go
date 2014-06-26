@@ -32,6 +32,7 @@ type PostListRouter struct {
 }
 
 func (this *PostListRouter) setCategories(cats *[]models.Category) {
+	//@see modules/post/topic_util.go
 	post.ListCategories(cats)
 	this.Data["Categories"] = *cats
 }
@@ -39,17 +40,6 @@ func (this *PostListRouter) setCategories(cats *[]models.Category) {
 func (this *PostListRouter) setTopicsOfCat(topics *[]models.Topic, cat *models.Category) {
 	post.ListTopicsOfCat(topics, cat)
 	this.Data["Topics"] = *topics
-}
-
-func (this *PostListRouter) postsFilter(qs orm.QuerySeter) orm.QuerySeter {
-	if !this.IsLogin {
-		return qs
-	}
-	args := []string{utils.ToStr(this.Locale.Index())}
-	args = append(args, this.User.LangAdds...)
-	args = append(args, utils.ToStr(this.User.Lang))
-	qs = qs.Filter("Lang__in", args)
-	return qs
 }
 
 // Get implemented Get method for HomeRouter.
@@ -62,7 +52,6 @@ func (this *PostListRouter) Home() {
 
 	var posts []models.Post
 	qs := models.Posts().OrderBy("-Created").Limit(25).RelatedSel()
-	qs = this.postsFilter(qs)
 
 	models.ListObjects(qs, &posts)
 	this.Data["Posts"] = posts
@@ -88,7 +77,6 @@ func (this *PostListRouter) Category() {
 	pers := 25
 
 	qs := models.Posts().Filter("Category", &cat)
-	qs = this.postsFilter(qs)
 
 	cnt, _ := models.CountObjects(qs)
 	pager := this.SetPaginator(pers, cnt)
@@ -131,7 +119,6 @@ func (this *PostListRouter) Navs() {
 	switch slug {
 	case "recent":
 		qs := models.Posts()
-		qs = this.postsFilter(qs)
 
 		cnt, _ := models.CountObjects(qs)
 		pager := this.SetPaginator(pers, cnt)
@@ -145,7 +132,6 @@ func (this *PostListRouter) Navs() {
 
 	case "best":
 		qs := models.Posts().Filter("IsBest", true)
-		qs = this.postsFilter(qs)
 
 		cnt, _ := models.CountObjects(qs)
 		pager := this.SetPaginator(pers, cnt)
@@ -159,7 +145,6 @@ func (this *PostListRouter) Navs() {
 
 	case "cold":
 		qs := models.Posts().Filter("Replys", 0)
-		qs = this.postsFilter(qs)
 
 		cnt, _ := models.CountObjects(qs)
 		pager := this.SetPaginator(pers, cnt)
@@ -176,7 +161,6 @@ func (this *PostListRouter) Navs() {
 		nums, _ := models.FollowTopics().Filter("User", &this.User.Id).OrderBy("-Created").ValuesFlat(&topicIds, "Topic")
 		if nums > 0 {
 			qs := models.Posts().Filter("Topic__in", topicIds)
-			qs = this.postsFilter(qs)
 
 			cnt, _ := models.CountObjects(qs)
 			pager := this.SetPaginator(pers, cnt)
@@ -196,7 +180,6 @@ func (this *PostListRouter) Navs() {
 		nums, _ := this.User.FollowingUsers().OrderBy("-Created").ValuesFlat(&userIds, "FollowUser")
 		if nums > 0 {
 			qs := models.Posts().Filter("User__in", userIds)
-			qs = this.postsFilter(qs)
 
 			cnt, _ := models.CountObjects(qs)
 			pager := this.SetPaginator(pers, cnt)
@@ -226,7 +209,6 @@ func (this *PostListRouter) Topic() {
 		pers := 25
 
 		qs := models.Posts().Filter("Topic", &topic)
-		qs = this.postsFilter(qs)
 
 		cnt, _ := models.CountObjects(qs)
 		pager := this.SetPaginator(pers, cnt)

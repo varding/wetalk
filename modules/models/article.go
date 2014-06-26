@@ -19,26 +19,22 @@ import (
 	"time"
 
 	"github.com/astaxie/beego/orm"
-	"github.com/beego/i18n"
 
 	"github.com/beego/wetalk/modules/utils"
 	"github.com/beego/wetalk/setting"
 )
 
 type Article struct {
-	Id               int
-	User             *User     `orm:"rel(fk)"`
-	Uri              string    `orm:"size(60);unqiue"`
-	Title            string    `orm:"size(60)"`
-	Content          string    `orm:"type(text)"`
-	ContentCache     string    `orm:"type(text)"`
-	TitleZhCn        string    `orm:"size(60)"`
-	ContentZhCn      string    `orm:"type(text)"`
-	ContentCacheZhCn string    `orm:"type(text)"`
-	LastAuthor       *User     `orm:"rel(fk);null"`
-	IsPublish        bool      `orm:"index"`
-	Created          time.Time `orm:"auto_now_add"`
-	Updated          time.Time `orm:"auto_now"`
+	Id           int
+	User         *User     `orm:"rel(fk)"`
+	Uri          string    `orm:"size(60);unqiue"`
+	Title        string    `orm:"size(60)"`
+	Content      string    `orm:"type(text)"`
+	ContentCache string    `orm:"type(text)"`
+	LastAuthor   *User     `orm:"rel(fk);null"`
+	IsPublish    bool      `orm:"index"`
+	Created      time.Time `orm:"auto_now_add"`
+	Updated      time.Time `orm:"auto_now"`
 }
 
 func (m *Article) Insert() error {
@@ -82,27 +78,15 @@ func (m *Article) Link() string {
 	return fmt.Sprintf("%s%s", setting.AppUrl, uri)
 }
 
-func (m *Article) GetTitle(lang string) string {
-	var title string
-	switch i18n.IndexLang(lang) {
-	case setting.LangZhCN:
-		title = m.TitleZhCn
-	default:
-		title = m.Title
-	}
-	return title
+func (m *Article) GetTitle() string {
+	return m.Title
 }
 
-func (m *Article) GetContentCache(lang string) string {
+func (m *Article) GetContentCache() string {
 	var content, contentCache string
-	switch i18n.IndexLang(lang) {
-	case setting.LangZhCN:
-		content = m.ContentZhCn
-		contentCache = m.ContentCacheZhCn
-	default:
-		content = m.Content
-		contentCache = m.ContentCache
-	}
+	content = m.Content
+	contentCache = m.ContentCache
+
 	if setting.RealtimeRenderMD {
 		return utils.RenderMarkdown(content)
 	} else {

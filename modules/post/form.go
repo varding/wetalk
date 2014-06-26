@@ -54,7 +54,7 @@ func (form *PostForm) CategorySelectData() [][]string {
 func (form *PostForm) TopicSelectData() [][]string {
 	data := make([][]string, 0, len(form.Topics))
 	for _, topic := range form.Topics {
-		data = append(data, []string{topic.GetName(form.Locale.Lang), utils.ToStr(topic.Id)})
+		data = append(data, []string{topic.Name, utils.ToStr(topic.Id)})
 	}
 	return data
 }
