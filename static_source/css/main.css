@@ -222,7 +222,7 @@
 #post-new .post-topics {
   width: 170px;
   float: left;
-  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .post-show .post-title {
