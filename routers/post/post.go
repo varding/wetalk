@@ -346,6 +346,14 @@ func (this *PostRouter) NewSubmit() {
 		return
 	}
 
+	//we don't use the user input language
+	//so we need to manually set one
+	if this.Locale.Lang == "en-US" {
+		form.Lang = setting.LangEnUS
+	} else {
+		form.Lang = setting.LangZhCN
+	}
+
 	var post models.Post
 	if err := form.SavePost(&post, &this.User); err == nil {
 
