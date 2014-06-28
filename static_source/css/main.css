@@ -190,6 +190,7 @@
 
 .topic-info .topic-img img {
   width: 80px;
+  border-radius: 5px;
 }
 
 .topic-info .topic-intro {
