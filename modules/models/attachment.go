@@ -27,7 +27,8 @@ import (
 
 type Image struct {
 	Id      int
-	User    *User `orm:"rel(fk)"`
+	User    *User  `orm:"rel(fk)"`
+	Token   string `orm:"size(10)"`
 	Width   int
 	Height  int
 	Ext     int `orm:"index"`
