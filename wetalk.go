@@ -32,6 +32,7 @@ import (
 	"github.com/beego/wetalk/setting"
 
 	_ "github.com/go-sql-driver/mysql"
+	. "github.com/qiniu/api/conf"
 )
 
 // We have to call a initialize function manully
@@ -49,6 +50,10 @@ func initialize() {
 	setting.SocialAuth.ConnectFailedURL = "/settings/profile"
 	setting.SocialAuth.ConnectRegisterURL = "/register/connect"
 	setting.SocialAuth.LoginURL = "/login"
+
+	//Qiniu
+	ACCESS_KEY = setting.QiniuAccessKey
+	SECRET_KEY = setting.QiniuSecurityKey
 }
 
 func main() {
@@ -71,7 +76,11 @@ func main() {
 	}
 
 	// Add Filters
-	beego.InsertFilter("/img/*", beego.BeforeRouter, attachment.ImageFilter)
+	if setting.QiniuServiceEnabled {
+		beego.InsertFilter("/img/*", beego.BeforeRouter, attachment.QiniuImageFilter)
+	} else {
+		beego.InsertFilter("/img/*", beego.BeforeRouter, attachment.ImageFilter)
+	}
 
 	beego.InsertFilter("/captcha/*", beego.BeforeRouter, setting.Captcha.Handler)
 
@@ -122,8 +131,13 @@ func main() {
 	beego.Router("/forgot", forgot)
 	beego.Router("/reset/:code([0-9a-zA-Z]+)", forgot, "get:Reset;post:ResetPost")
 
-	upload := new(attachment.UploadRouter)
-	beego.Router("/upload", upload, "post:Post")
+	if setting.QiniuServiceEnabled {
+		upload := new(attachment.QiniuUploadRouter)
+		beego.Router("/upload", upload, "post:Post")
+	} else {
+		upload := new(attachment.UploadRouter)
+		beego.Router("/upload", upload, "post:Post")
+	}
 
 	apiR := new(api.ApiRouter)
 	beego.Router("/api/user", apiR, "post:Users")
