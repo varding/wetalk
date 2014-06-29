@@ -27,8 +27,8 @@ import (
 
 	"github.com/beego/wetalk/modules/attachment"
 	"github.com/beego/wetalk/modules/models"
+	"github.com/beego/wetalk/modules/utils"
 	"github.com/beego/wetalk/routers/base"
-	"github.com/qiniu/api/rs"
 )
 
 type QiniuUploadRouter struct {
@@ -107,7 +107,7 @@ func QiniuImageFilter(ctx *context.Context) {
 		}
 		imageHeight *= zoomRatio
 	*/
-	var imageUrl = GetQiniuPrivateDownloadUrl(setting.QiniuPostDomain, imageKey)
+	var imageUrl = utils.GetQiniuPrivateDownloadUrl(setting.QiniuPostDomain, imageKey)
 
 	resp, err := http.Get(imageUrl)
 	if err != nil {
@@ -119,10 +119,4 @@ func QiniuImageFilter(ctx *context.Context) {
 		return
 	}
 	ctx.ResponseWriter.Write(body)
-}
-
-func GetQiniuPrivateDownloadUrl(domain, key string) string {
-	baseUrl := rs.MakeBaseUrl(domain, key)
-	policy := rs.GetPolicy{}
-	return policy.MakeRequest(baseUrl, nil)
 }

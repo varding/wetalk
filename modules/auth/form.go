@@ -274,6 +274,36 @@ func (form *PasswordForm) Placeholders() map[string]string {
 	}
 }
 
+// User avatar form
+type UserAvatarForm struct {
+	AvatarType int `form:"type(select);attr(rel,select2)" valid:""`
+}
+
+func (form *UserAvatarForm) AvatarTypeSelectData() [][]string {
+	var data = make([][]string, 0, 2)
+	data = append(data, []string{"auth.user_avatar_use_gravatar", utils.ToStr(setting.AvatarTypeGravatar)})
+	data = append(data, []string{"auth.user_avatar_use_personal", utils.ToStr(setting.AvatarTypePersonalized)})
+
+	return data
+}
+
+func (form *UserAvatarForm) Labels() map[string]string {
+	return map[string]string{
+		"AvatarType": "auth.user_avatar_type",
+	}
+}
+
+func (form *UserAvatarForm) Valid(v *validation.Validation) {
+	if len(utils.ToStr(form.AvatarType)) == 0 {
+		v.SetError("AvatarType", "Please select")
+	}
+}
+
+func (form *UserAvatarForm) SetFromUser(user *models.User) {
+	utils.SetFormValues(user, form)
+}
+
+//User admin form
 type UserAdminForm struct {
 	Create      bool   `form:"-"`
 	Id          int    `form:"-"`

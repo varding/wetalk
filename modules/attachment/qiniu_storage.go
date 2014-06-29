@@ -3,8 +3,8 @@ package attachment
 import (
 	"fmt"
 	"github.com/beego/wetalk/modules/models"
+	"github.com/beego/wetalk/modules/utils"
 	"github.com/qiniu/api/io"
-	"github.com/qiniu/api/rs"
 	"image"
 	"image/gif"
 	"image/jpeg"
@@ -13,13 +13,6 @@ import (
 	"path/filepath"
 	"time"
 )
-
-func GetQiniuUptoken(bucketName string) string {
-	putPolicy := rs.PutPolicy{
-		Scope: bucketName,
-	}
-	return putPolicy.Token(nil)
-}
 
 func SaveImageToQiniu(m *models.Image, r goio.ReadSeeker, mime string, filename string, created time.Time, bucketName string) error {
 	var ext string
@@ -85,7 +78,7 @@ func SaveImageToQiniu(m *models.Image, r goio.ReadSeeker, mime string, filename 
 	}
 
 	//save to qiniu
-	var uptoken = GetQiniuUptoken(bucketName)
+	var uptoken = utils.GetQiniuUptoken(bucketName)
 	var putRet io.PutRet
 	var putExtra = &io.PutExtra{
 		MimeType: mime,

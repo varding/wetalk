@@ -18,6 +18,12 @@ import (
 	"encoding/hex"
 	"fmt"
 	"github.com/astaxie/beego/context"
+	"image/gif"
+	"image/jpeg"
+	"image/png"
+	"io"
+	"io/ioutil"
+	"path/filepath"
 	"strings"
 
 	"github.com/astaxie/beego"
@@ -28,6 +34,7 @@ import (
 	"github.com/beego/wetalk/modules/models"
 	"github.com/beego/wetalk/modules/utils"
 	"github.com/beego/wetalk/setting"
+	qio "github.com/qiniu/api/io"
 )
 
 // CanRegistered checks if the username or e-mail is available.
@@ -108,6 +115,12 @@ func SaveNewPassword(user *models.User, password string) error {
 	salt := models.GetUserSalt()
 	user.Password = fmt.Sprintf("%s$%s", salt, utils.EncodePassword(password, salt))
 	return user.Update("Password", "Rands", "Updated")
+}
+
+//set a new avatar type to user
+func SaveAvatarType(user *models.User, avatarType int) error {
+	user.AvatarType = avatarType
+	return user.Update("AvatarType", "Updated")
 }
 
 // get login redirect url from cookie
@@ -311,4 +324,81 @@ func CreateUserResetPwdCode(user *models.User, startInf interface{}) string {
 	// add tail hex username
 	code += hex.EncodeToString([]byte(user.UserName))
 	return code
+}
+
+//upload user avatar
+func UploadUserAvatarToQiniu(r io.ReadSeeker, filename string, mime string, bucketName string, user *models.User) error {
+	var ext string
+
+	// test image mime type
+	switch mime {
+	case "image/jpeg":
+		ext = ".jpg"
+
+	case "image/png":
+		ext = ".png"
+
+	case "image/gif":
+		ext = ".gif"
+
+	default:
+		ext = filepath.Ext(filename)
+		switch ext {
+		case ".jpg", ".png", ".gif":
+		default:
+			return fmt.Errorf("unsupport image format `%s`", filename)
+		}
+	}
+
+	// decode image
+	var err error
+	switch ext {
+	case ".jpg":
+		_, err = jpeg.Decode(r)
+	case ".png":
+		_, err = png.Decode(r)
+	case ".gif":
+		_, err = gif.Decode(r)
+	}
+
+	if err != nil {
+		return err
+	}
+
+	//reset reader pointer
+	if _, err := r.Seek(0, 0); err != nil {
+		return err
+	}
+	var data []byte
+	if data, err = ioutil.ReadAll(r); err != nil {
+		return err
+	}
+
+	if len(data) > setting.AvatarImageMaxLength {
+		return fmt.Errorf("avatar image size too large", filename)
+	}
+
+	//reset reader pointer again
+	if _, err := r.Seek(0, 0); err != nil {
+		return err
+	}
+
+	//save to qiniu
+	var uptoken = utils.GetQiniuUptoken(bucketName)
+	var putRet qio.PutRet
+	var putExtra = &qio.PutExtra{
+		MimeType: mime,
+	}
+
+	err = qio.PutWithoutKey(nil, &putRet, uptoken, r, putExtra)
+	if err != nil {
+		return err
+	}
+
+	//update user
+	user.AvatarKey = putRet.Key
+	if err := user.Update("AvatarKey", "Updated"); err != nil {
+		return err
+	}
+	return nil
 }

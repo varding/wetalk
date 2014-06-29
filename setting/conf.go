@@ -108,11 +108,19 @@ var (
 	QiniuSecurityKey    string
 	QiniuPostBucket     string
 	QiniuPostDomain     string
+	QiniuAvatarBucket   string
+	QiniuAvatarDomain   string
 )
 
 const (
 	LangEnUS = iota
 	LangZhCN
+)
+
+const (
+	AvatarImageMaxLength = 500 * 1024
+	AvatarTypeGravatar   = iota
+	AvatarTypePersonalized
 )
 
 var (
@@ -342,6 +350,8 @@ func reloadConfig() {
 	QiniuSecurityKey = Cfg.MustValue("qiniu", "qiniu_security_key")
 	QiniuPostBucket = Cfg.MustValue("qiniu", "qiniu_post_bucket")
 	QiniuPostDomain = Cfg.MustValue("qiniu", "qiniu_post_domain")
+	QiniuAvatarBucket = Cfg.MustValue("qiniu", "qiniu_avatar_bucket")
+	QiniuAvatarDomain = Cfg.MustValue("qiniu", "qiniu_avatar_domain")
 }
 
 func settingLocales() {

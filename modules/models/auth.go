@@ -41,6 +41,8 @@ type User struct {
 	UserName    string    `orm:"size(30);unique"`
 	NickName    string    `orm:"size(30)"`
 	Password    string    `orm:"size(128)"`
+	AvatarType  int       `orm:"default(0)"`
+	AvatarKey   string    `orm:"size(50)"`
 	Url         string    `orm:"size(100)"`
 	Company     string    `orm:"size(30)"`
 	Location    string    `orm:"size(30)"`
@@ -113,7 +115,11 @@ func (m *User) Link() string {
 }
 
 func (m *User) AvatarLink() string {
-	return fmt.Sprintf("%s%s", setting.AvatarURL, m.GrEmail)
+	if m.AvatarType == setting.AvatarTypePersonalized {
+		return fmt.Sprintf("%s", utils.GetQiniuPrivateDownloadUrl(setting.QiniuAvatarDomain, m.AvatarKey))
+	} else {
+		return fmt.Sprintf("%s%s", setting.AvatarURL, m.GrEmail)
+	}
 }
 
 func (m *User) FollowingUsers() orm.QuerySeter {
