@@ -109,6 +109,10 @@ func (this *SettingsRouter) AvatarUpload() {
 	if err := auth.UploadUserAvatarToQiniu(file, handler.Filename, mime, setting.QiniuAvatarBucket, &this.User); err != nil {
 		return
 	}
+
+	userAvatarForm := auth.UserAvatarForm{}
+	userAvatarForm.SetFromUser(&this.User)
+	this.SetFormSets(&userAvatarForm)
 	this.FlashRedirect("/settings/avatar", 302, "AvatarUploadSuccess")
 }
 
