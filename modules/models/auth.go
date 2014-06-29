@@ -41,7 +41,7 @@ type User struct {
 	UserName    string    `orm:"size(30);unique"`
 	NickName    string    `orm:"size(30)"`
 	Password    string    `orm:"size(128)"`
-	AvatarType  int       `orm:"default(0)"`
+	AvatarType  int       `orm:"default(1)"`
 	AvatarKey   string    `orm:"size(50)"`
 	Url         string    `orm:"size(100)"`
 	Company     string    `orm:"size(30)"`
@@ -116,7 +116,11 @@ func (m *User) Link() string {
 
 func (m *User) AvatarLink() string {
 	if m.AvatarType == setting.AvatarTypePersonalized {
-		return fmt.Sprintf("%s", utils.GetQiniuPrivateDownloadUrl(setting.QiniuAvatarDomain, m.AvatarKey))
+		if m.AvatarKey != "" {
+			return fmt.Sprintf("%s", utils.GetQiniuPrivateDownloadUrl(setting.QiniuAvatarDomain, m.AvatarKey))
+		} else {
+			return "http://golanghome-public.qiniudn.com/golang_avatar.png"
+		}
 	} else {
 		return fmt.Sprintf("%s%s", setting.AvatarURL, m.GrEmail)
 	}
