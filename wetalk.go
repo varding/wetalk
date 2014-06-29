@@ -126,6 +126,7 @@ func main() {
 
 	settings := new(auth.SettingsRouter)
 	beego.Router("/settings/profile", settings, "get:Profile;post:ProfileSave")
+	beego.Router("/settings/change/password", settings, "get:ChangePassword;post:ProfileSave")
 
 	forgot := new(auth.ForgotRouter)
 	beego.Router("/forgot", forgot)

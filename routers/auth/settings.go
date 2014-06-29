@@ -39,6 +39,15 @@ func (this *SettingsRouter) Profile() {
 
 	form.SetFromUser(&this.User)
 	this.SetFormSets(&form)
+}
+
+func (this *SettingsRouter) ChangePassword() {
+	this.TplNames = "settings/change_password.html"
+
+	//need login
+	if this.CheckLoginRedirect() {
+		return
+	}
 
 	formPwd := auth.PasswordForm{}
 	this.SetFormSets(&formPwd)
@@ -47,12 +56,17 @@ func (this *SettingsRouter) Profile() {
 // ProfileSave implemented save user profile.
 func (this *SettingsRouter) ProfileSave() {
 	this.TplNames = "settings/profile.html"
-
 	if this.CheckLoginRedirect() {
 		return
 	}
 
 	action := this.GetString("action")
+	switch action {
+	case "save-profile":
+		this.TplNames = "settings/profile.html"
+	case "change-password":
+		this.TplNames = "settings/change_password.html"
+	}
 
 	if this.IsAjax() {
 		switch action {
@@ -91,7 +105,7 @@ func (this *SettingsRouter) ProfileSave() {
 		if this.ValidFormSets(&pwdForm) {
 			// verify success and save new password
 			if err := auth.SaveNewPassword(&this.User, pwdForm.Password); err == nil {
-				this.FlashRedirect("/settings/profile", 302, "PasswordSave")
+				this.FlashRedirect("/settings/change/password", 302, "PasswordSave")
 				return
 			} else {
 				beego.Error("ProfileSave: change-password", err)
