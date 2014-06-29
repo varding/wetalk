@@ -515,7 +515,7 @@ func (this *BaseRouter) setLang() bool {
 		}
 	}
 
-	// 4. DefaultLang language is English.
+	// 4. DefaultLang language is Chinese.
 	if len(lang) == 0 {
 		//lang = "en-US"
 		lang = "zh-CN"

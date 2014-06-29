@@ -165,7 +165,7 @@ func (this *RegisterRouter) Register() {
 	// Create new user.
 	user := new(models.User)
 
-	if err := auth.RegisterUser(user, form.UserName, form.Email, form.Password); err == nil {
+	if err := auth.RegisterUser(user, form.UserName, form.Email, form.Password, this.Locale); err == nil {
 		auth.SendRegisterMail(this.Locale, user)
 
 		loginRedirect := this.LoginUser(user, false)

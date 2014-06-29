@@ -19,11 +19,11 @@ import (
 	"fmt"
 	"github.com/astaxie/beego/context"
 	"strings"
-	// "time"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/session"
+	"github.com/beego/i18n"
 
 	"github.com/beego/wetalk/modules/models"
 	"github.com/beego/wetalk/modules/utils"
@@ -77,7 +77,7 @@ func HasUser(user *models.User, username string) bool {
 }
 
 // register create user
-func RegisterUser(user *models.User, username, email, password string) error {
+func RegisterUser(user *models.User, username, email, password string, locale i18n.Locale) error {
 	// use random salt encode password
 	salt := models.GetUserSalt()
 	pwd := utils.EncodePassword(password, salt)
@@ -94,6 +94,12 @@ func RegisterUser(user *models.User, username, email, password string) error {
 	// Use username as default nickname.
 	user.NickName = user.UserName
 
+	//set default language
+	if locale.Lang == "en-US" {
+		user.Lang = setting.LangEnUS
+	} else {
+		user.Lang = setting.LangZhCN
+	}
 	return user.Insert()
 }
 

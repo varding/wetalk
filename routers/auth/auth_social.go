@@ -161,7 +161,7 @@ func (this *SocialAuthRouter) ConnectPost() {
 		}
 
 	default:
-		if err := auth.RegisterUser(&user, formR.UserName, formR.Email, formR.Password); err == nil {
+		if err := auth.RegisterUser(&user, formR.UserName, formR.Email, formR.Password, this.Locale); err == nil {
 
 			auth.SendRegisterMail(this.Locale, &user)
 

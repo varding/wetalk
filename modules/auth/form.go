@@ -181,15 +181,6 @@ func (form *ProfileForm) LangSelectData() [][]string {
 	return data
 }
 
-func (form *ProfileForm) LangAddsSelectData() [][]string {
-	langs := setting.Langs
-	data := make([][]string, 0, len(langs))
-	for i, lang := range langs {
-		data = append(data, []string{lang, utils.ToStr(i)})
-	}
-	return data
-}
-
 func (form *ProfileForm) Valid(v *validation.Validation) {
 	if len(i18n.GetLangByIndex(form.Lang)) == 0 {
 		v.SetError("Lang", "Can not be empty")
