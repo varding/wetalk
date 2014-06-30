@@ -117,7 +117,7 @@ func (m *User) Link() string {
 func (m *User) AvatarLink() string {
 	if m.AvatarType == setting.AvatarTypePersonalized {
 		if m.AvatarKey != "" {
-			return fmt.Sprintf("%s", utils.GetQiniuPrivateDownloadUrl(setting.QiniuAvatarDomain, m.AvatarKey))
+			return fmt.Sprintf("%s", utils.GetQiniuPublicDownloadUrl(setting.QiniuAvatarDomain, m.AvatarKey))
 		} else {
 			return "http://golanghome-public.qiniudn.com/golang_avatar.png"
 		}

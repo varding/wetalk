@@ -91,25 +91,25 @@ func QiniuImageFilter(ctx *context.Context) {
 		}
 		imageKey = imageName[:i]
 	}
-	/*
-		var image = models.Image{
-			Token: imageKey,
-		}
-		err := image.Read("Token")
-		if err != nil {
-			return
-		}
-		var imageWidth = image.Width
-		var imageHeight = image.Height
-		var zoomRatio = setting.ImageSizeMiddle / imageWidth
-		if imageWidth > setting.ImageSizeMiddle {
-			imageWidth = setting.ImageSizeMiddle
-		}
-		imageHeight *= zoomRatio
-	*/
-	var imageUrl = utils.GetQiniuPrivateDownloadUrl(setting.QiniuPostDomain, imageKey)
 
-	resp, err := http.Get(imageUrl)
+	var image = models.Image{
+		Token: imageKey,
+	}
+	err := image.Read("Token")
+	if err != nil {
+		return
+	}
+	var imageWidth = image.Width
+	var imageHeight = image.Height
+	var zoomRatio = setting.ImageSizeMiddle / imageWidth
+	if imageWidth > setting.ImageSizeMiddle {
+		imageWidth = setting.ImageSizeMiddle
+	}
+	imageHeight *= zoomRatio
+
+	var imageUrl = utils.GetQiniuPublicDownloadUrl(setting.QiniuPostDomain, imageKey)
+	var zoomImageUrl = utils.GetQiniuZoomViewUrl(imageUrl, imageWidth, imageHeight)
+	resp, err := http.Get(zoomImageUrl)
 	if err != nil {
 		return
 	}
