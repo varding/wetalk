@@ -114,16 +114,28 @@ func (m *User) Link() string {
 	return fmt.Sprintf("%suser/%s", setting.AppUrl, m.UserName)
 }
 
-func (m *User) AvatarLink() string {
+func (m *User) avatarLink(size int) string {
 	if m.AvatarType == setting.AvatarTypePersonalized {
 		if m.AvatarKey != "" {
-			return fmt.Sprintf("%s", utils.GetQiniuPublicDownloadUrl(setting.QiniuAvatarDomain, m.AvatarKey))
+			return fmt.Sprintf("%s", utils.GetQiniuZoomViewUrl(utils.GetQiniuPublicDownloadUrl(setting.QiniuAvatarDomain, m.AvatarKey), size, size))
 		} else {
-			return "http://golanghome-public.qiniudn.com/golang_avatar.png"
+			return fmt.Sprintf("http://golanghome-public.qiniudn.com/golang_avatar.png?imageView/0/w/%s/h/%s/q/100", utils.ToStr(size), utils.ToStr(size))
 		}
 	} else {
-		return fmt.Sprintf("%s%s", setting.AvatarURL, m.GrEmail)
+		return fmt.Sprintf("%s%s?size=%s", setting.AvatarURL, m.GrEmail, utils.ToStr(size))
 	}
+}
+
+func (m *User) AvatarLink48() string {
+	return m.avatarLink(48)
+}
+
+func (m *User) AvatarLink100() string {
+	return m.avatarLink(100)
+}
+
+func (m *User) AvatarLink200() string {
+	return m.avatarLink(200)
 }
 
 func (m *User) FollowingUsers() orm.QuerySeter {
