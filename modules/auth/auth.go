@@ -107,6 +107,9 @@ func RegisterUser(user *models.User, username, email, password string, locale i1
 	} else {
 		user.Lang = setting.LangZhCN
 	}
+
+	//set default avatar
+	user.AvatarType = setting.AvatarTypeGravatar
 	return user.Insert()
 }
 
