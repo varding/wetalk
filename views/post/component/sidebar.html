@@ -30,6 +30,13 @@
 			 		</tbody>
 			 	</table>
         	</div>
+        	<div class="user-notice">
+        		{{if .UnreadNotificationCount}}
+        			<p><a href="{{.AppUrl}}notification"><strong>{{.UnreadNotificationCount}}&nbsp;{{i18n .Lang "notice.unread_notice_count"}}</strong></a></p>
+        		{{else}}
+        			<p><a href="{{.AppUrl}}notification">{{.UnreadNotificationCount}}&nbsp;{{i18n .Lang "notice.unread_notice_count"}}</a></p>
+        		{{end}}
+        	</div>
 		{{else}}
 		<div class="cell first" style="margin-bottom:10px;">
 			<p><strong>{{i18n .Lang "app_name"}}</strong></p>

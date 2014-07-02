@@ -126,6 +126,10 @@ func (m *User) avatarLink(size int) string {
 	}
 }
 
+func (m *User) AvatarLink24() string {
+	return m.avatarLink(24)
+}
+
 func (m *User) AvatarLink48() string {
 	return m.avatarLink(48)
 }

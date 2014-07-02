@@ -116,6 +116,11 @@ func (this *BaseRouter) Prepare() {
 	this.Data["xsrf_token"] = xsrfToken
 	this.Data["xsrf_html"] = template.HTML(this.XsrfFormHtml())
 
+	// read unread notifications
+	if this.IsLogin {
+		this.Data["UnreadNotificationCount"] = models.GetUnreadNotificationCount(this.User.Id)
+	}
+
 	// if method is GET then auto create a form once token
 	if this.Ctx.Request.Method == "GET" {
 		this.FormOnceCreate()

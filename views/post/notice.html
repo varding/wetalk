@@ -1,0 +1,34 @@
+{{template "base/base.html" .}}
+{{template "base/base_common.html" .}}
+{{define "meta"}}
+    <title>{{i18n .Lang "notice.user_notice"}} - {{i18n .Lang "app_name"}}</title>
+    <meta name="description" content='{{i18n .Lang "notice.user_notice"}}' />
+{{end}}
+{{define "body"}}
+<div class="row">
+    <div id="content" class="col-md-8">
+    	<div class="box">
+            <div class="cell breadcrumb first">
+                <a href="{{.AppUrl}}"><i class="icon icon-home"></i></a><i class="divider icon-angle-right"></i>{{i18n .Lang "notice.user_notice"}}
+                <span class="pull-right">
+                </span>
+            </div>
+            {{if .paginator.Nums}}
+                <div class="notice-list">
+                    {{template "post/component/notice-list.html" dict "root" . "Notifications" .Notifications}}
+                </div>
+                <div class="cell last">
+                    {{template "base/paginator_pn.html" .}}
+                </div>
+            {{else}}
+                <div class="cell last">
+                    <div class="text-center">{{i18n .Lang "notice.not_found_notice"}}</div>
+                </div>
+            {{end}}
+	   </div>
+    </div>
+    <div id="sidebar" class="col-md-4">
+        {{template "post/component/sidebar.html" .}}
+    </div>
+</div>
+{{end}}

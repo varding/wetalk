@@ -113,14 +113,22 @@ var (
 )
 
 const (
-	LangEnUS = iota
-	LangZhCN
+	LangEnUS = 1
+	LangZhCN = 2
 )
 
 const (
-	AvatarImageMaxLength = 500 * 1024
-	AvatarTypeGravatar   = iota
-	AvatarTypePersonalized
+	AvatarImageMaxLength   = 500 * 1024
+	AvatarTypeGravatar     = 1
+	AvatarTypePersonalized = 2
+)
+
+const (
+	NOTICE_TYPE_COMMENT   = 1
+	NOTICE_TYPE_FAVOURITE = 2
+
+	NOTICE_UNREAD = 1
+	NOTICE_READ   = 2
 )
 
 var (

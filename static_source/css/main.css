@@ -498,13 +498,42 @@
   width:100%;
   margin-top:20px;
 }
+
 .user-stats table td{
   text-align: center;
   border-right: 1px solid #ccc;
 }
+
+.user-stats table td:last-child{
+  border-right: none;
+}
+
 .user-stats table a{
   text-decoration: none;
 }
+
 .user-stats table span{
   color: #aaa;
+}
+
+.user-notice{
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+.notice-title{
+  color: #888;
+}
+
+.notice-content{
+  background-color: #f2f2f2;
+  font-size: 12px;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+}
+
+.notice-time{
+  color:#aaa;
 }

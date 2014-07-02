@@ -109,7 +109,7 @@ type Comment struct {
 	Message      string `orm:"type(text)"`
 	MessageCache string `orm:"type(text)"`
 	Floor        int
-	Status       int
+	Status       int       `orm:"index"`
 	Created      time.Time `orm:"auto_now_add;index"`
 }
 

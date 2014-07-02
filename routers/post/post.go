@@ -386,6 +386,11 @@ func (this *PostRouter) Single() {
 	var comments []*models.Comment
 	this.loadComments(&postMd, &comments)
 
+	//mark all notification as read
+	if this.IsLogin {
+		models.MarkNortificationAsRead(this.User.Id, postMd.Id)
+	}
+
 	form := post.CommentForm{}
 	this.SetFormSets(&form)
 
@@ -420,6 +425,31 @@ func (this *PostRouter) SingleSubmit() {
 
 	comment := models.Comment{}
 	if err := form.SaveComment(&comment, &this.User, &postMd); err == nil {
+		//add notification
+		var fromUser = &this.User
+		var toUser = postMd.User
+		var uri = fmt.Sprintf("post/%d", postMd.Id)
+		var lang = setting.LangZhCN
+		if this.Locale.Lang == "en-US" {
+			lang = setting.LangEnUS
+		}
+		var notification = models.Notification{
+			FromUser:     fromUser,
+			ToUser:       toUser,
+			Action:       setting.NOTICE_TYPE_COMMENT,
+			Title:        postMd.Title,
+			TargetId:     postMd.Id,
+			Uri:          uri,
+			Lang:         lang,
+			Floor:        comment.Floor,
+			Content:      comment.Message,
+			ContentCache: comment.MessageCache,
+			Status:       setting.NOTICE_UNREAD,
+		}
+		if err := notification.Insert(); err == nil {
+			//pass
+		}
+		//end
 		this.JsStorage("deleteKey", "post/comment")
 		this.Redirect(postMd.Link(), 302)
 		redir = true

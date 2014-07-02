@@ -21,6 +21,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/beego/social-auth"
 
+	"github.com/astaxie/beego/orm"
 	"github.com/beego/wetalk/modules/utils"
 	"github.com/beego/wetalk/routers/admin"
 	"github.com/beego/wetalk/routers/api"
@@ -95,6 +96,9 @@ func main() {
 	beego.Router("/new", postR, "get:New;post:NewSubmit")
 	beego.Router("/post/:post([0-9]+)", postR, "get:Single;post:SingleSubmit")
 	beego.Router("/post/:post([0-9]+)/edit", postR, "get:Edit;post:EditSubmit")
+
+	noticeRouter := new(post.NoticeRouter)
+	beego.Router("/notification", noticeRouter, "get:Get")
 
 	if setting.NativeSearch || setting.SphinxEnabled {
 		searchR := new(post.SearchRouter)
@@ -176,6 +180,9 @@ func main() {
 
 	if beego.RunMode == "dev" {
 		beego.Router("/test/:tmpl(mail/.*)", new(base.TestRouter))
+
+		//enable debug for orm
+		orm.Debug = true
 	}
 
 	// For all unknown pages.
