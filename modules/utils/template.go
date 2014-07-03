@@ -126,6 +126,7 @@ func init() {
 	beego.AddFuncMap("loadtimes", loadtimes)
 	beego.AddFuncMap("sum", sum)
 	beego.AddFuncMap("loginto", loginto)
+	beego.AddFuncMap("isnotificationread", isnotificationread)
 }
 
 func RenderTemplate(TplNames string, Data map[interface{}]interface{}) string {
@@ -143,4 +144,12 @@ func RenderTemplate(TplNames string, Data map[interface{}]interface{}) string {
 	}
 	icontent, _ := ioutil.ReadAll(ibytes)
 	return string(icontent)
+}
+
+func isnotificationread(status int) bool {
+	var result = false
+	if status == setting.NOTICE_READ {
+		result = true
+	}
+	return result
 }

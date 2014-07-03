@@ -16,8 +16,9 @@ package post
 
 import (
 	"fmt"
-
 	"github.com/astaxie/beego/orm"
+	"regexp"
+	"strings"
 
 	"github.com/beego/wetalk/modules/models"
 	"github.com/beego/wetalk/modules/post"
@@ -448,6 +449,38 @@ func (this *PostRouter) SingleSubmit() {
 		}
 		if err := notification.Insert(); err == nil {
 			//pass
+		}
+
+		//check comment @
+		var pattern = "[ ]*@[a-zA-Z0-9]+[ ]*"
+		r := regexp.MustCompile(pattern)
+		userNames := r.FindAllString(comment.Message, -1)
+		fmt.Println(userNames)
+		for _, userName := range userNames {
+			bUserName := strings.TrimPrefix(strings.TrimSpace(userName), "@")
+			user := &models.User{
+				UserName: bUserName,
+			}
+			if err := user.Read("UserName"); err == nil {
+				if user.Id != 0 {
+					notification := models.Notification{
+						FromUser:     fromUser,
+						ToUser:       user,
+						Action:       setting.NOTICE_TYPE_COMMENT,
+						Title:        postMd.Title,
+						TargetId:     postMd.Id,
+						Uri:          uri,
+						Lang:         lang,
+						Floor:        comment.Floor,
+						Content:      comment.Message,
+						ContentCache: comment.MessageCache,
+						Status:       setting.NOTICE_UNREAD,
+					}
+					if err := notification.Insert(); err == nil {
+						//pass
+					}
+				}
+			}
 		}
 		//end
 		this.JsStorage("deleteKey", "post/comment")
