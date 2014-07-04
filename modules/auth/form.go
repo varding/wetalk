@@ -176,13 +176,13 @@ func (form *ProfileForm) LangSelectData() [][]string {
 	langs := setting.Langs
 	data := make([][]string, 0, len(langs))
 	for i, lang := range langs {
-		data = append(data, []string{lang, utils.ToStr(i)})
+		data = append(data, []string{lang, utils.ToStr(i + 1)})
 	}
 	return data
 }
 
 func (form *ProfileForm) Valid(v *validation.Validation) {
-	if len(i18n.GetLangByIndex(form.Lang)) == 0 {
+	if len(i18n.GetLangByIndex(form.Lang-1)) == 0 {
 		v.SetError("Lang", "Can not be empty")
 	}
 }
@@ -334,7 +334,7 @@ func (form *UserAdminForm) LangSelectData() [][]string {
 	langs := setting.Langs
 	data := make([][]string, 0, len(langs))
 	for i, lang := range langs {
-		data = append(data, []string{lang, utils.ToStr(i)})
+		data = append(data, []string{lang, utils.ToStr(i + 1)})
 	}
 	return data
 }
@@ -350,7 +350,7 @@ func (form *UserAdminForm) Valid(v *validation.Validation) {
 		v.SetError("Email", "auth.email_already_taken")
 	}
 
-	if len(i18n.GetLangByIndex(form.Lang)) == 0 {
+	if len(i18n.GetLangByIndex(form.Lang-1)) == 0 {
 		v.SetError("Lang", "Can not be empty")
 	}
 }
