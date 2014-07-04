@@ -462,7 +462,7 @@ func (this *PostRouter) SingleSubmit() {
 				UserName: bUserName,
 			}
 			if err := user.Read("UserName"); err == nil {
-				if user.Id != 0 {
+				if user.Id != 0 && user.Id != postMd.User.Id {
 					notification := models.Notification{
 						FromUser:     fromUser,
 						ToUser:       user,
