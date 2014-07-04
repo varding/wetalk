@@ -113,8 +113,8 @@ var (
 )
 
 const (
-	LangEnUS = 1
-	LangZhCN = 2
+	LangEnUS = iota
+	LangZhCN
 )
 
 const (
