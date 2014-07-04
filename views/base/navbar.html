@@ -29,37 +29,7 @@
                 <li><a href="{{.AppUrl}}settings/profile">{{i18n .Lang "auth.user_settings"}}</a></li>
                 <li><a href="{{.AppUrl}}logout">{{i18n .Lang "auth.logout"}}</a></li>
                 {{else}}
-                <li class="dropdown">
-                    <a href="{{.AppUrl}}login" class="dropdown-toggle" data-toggle="dropdown">{{i18n .Lang "auth.login"}}</a>
-                    <form id="dropdown-login" class="dropdown-menu cell" action="{{.AppUrl}}login" method="POST">
-                        {{.xsrf_html}}{{.once_html}}
-                        <div class="alert alert-info alert-small">
-                            {{i18n .Lang "auth.login_your_account"}}
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" name="UserName" type="text" placeholder="{{i18n .Lang "auth.login_username"}} / {{i18n .Lang "auth.login_email"}}" value="">
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" name="Password" type="password" placeholder="{{i18n .Lang "auth.login_password"}}">
-                        </div>
-                        <p>
-                            <label>
-                                <input type="hidden" name="Remember" value="0">
-                                <button type="button" data-toggle="button" data-name="Remember" value="0" class="btn btn-default btn-xs btn-checked"><i class="icon icon-ok"></i></button>{{i18n .Lang "auth.login_remember_me"}}
-                            </label>
-                            <span class="pull-right"><a href="{{$.AppUrl}}forgot"><i class="icon-question-sign"></i> {{i18n .Lang "auth.forgot_password"}}</a></span>
-                        </p>
-                        <button class="btn btn-primary btn-block" type="submit">{{i18n .Lang "auth.login"}}</button>
-                        <!--
-                        <div class="auth-socials">
-                            <a href="{{.AppUrl}}login/google" class="icon-google-plus google"></a>
-                            <a href="{{.AppUrl}}login/github" class="icon-github github"></a>
-                            <a href="{{.AppUrl}}login/weibo" class="icon-weibo weibo"></a>
-                            <a href="{{.AppUrl}}login/qq" class="icon-qq-round qq"></a>
-                        </div>
-                        -->
-                    </form>
-                </li>
+                <li><a href="{{.AppUrl}}login">{{i18n .Lang "auth.login"}}</a></li>
                 <li><a href="{{.AppUrl}}register">{{i18n .Lang "auth.register"}}</a></li>
                 {{end}}
             </ul>
