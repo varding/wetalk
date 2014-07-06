@@ -42,6 +42,18 @@ import (
 func initialize() {
 	setting.LoadConfig()
 
+	//set logger
+	if setting.IsProMode {
+		beego.SetLogger("file", `{"filename":"logs/prod.log"}`)
+		beego.SetLevel(beego.LevelInfo)
+	} else {
+		beego.SetLogger("file", `{"filename":"logs/dev.log"}`)
+		beego.SetLevel(beego.LevelTrace)
+	}
+	beego.BeeLogger.DelLogger("console")
+	beego.SetLogFuncCall(true)
+
+	//check local search function
 	if err := utils.InitSphinxPools(); err != nil {
 		beego.Error(fmt.Sprint("sphinx init pool", err))
 	}
@@ -58,8 +70,6 @@ func initialize() {
 }
 
 func main() {
-	beego.SetLogFuncCall(true)
-
 	initialize()
 
 	beego.Info("AppPath:", beego.AppPath)
