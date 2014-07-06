@@ -134,6 +134,10 @@ func (m *User) AvatarLink48() string {
 	return m.avatarLink(48)
 }
 
+func (m *User) AvatarLink64() string {
+	return m.avatarLink(64)
+}
+
 func (m *User) AvatarLink100() string {
 	return m.avatarLink(100)
 }

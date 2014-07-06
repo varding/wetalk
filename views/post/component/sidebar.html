@@ -3,7 +3,7 @@
 	<div class="cell last slim">
 		{{if .IsLogin}}
 			<div class="user-info">
-			  <a href="{{.AppUrl}}user/{{.User.UserName}}" ><img class="middle" src="{{.User.AvatarLink48}}" style="width:48px;height:48px;"></a>
+			  <a href="{{.AppUrl}}user/{{.User.UserName}}" class="avatar"><img src="{{.User.AvatarLink48}}" ></a>
 			  &nbsp;
 			  <span style="font-size:15px;"><a href="{{.AppUrl}}user/{{.User.UserName}}">{{.User.NickName}}</a></span>
 			 </div>

@@ -38,7 +38,7 @@ import (
 )
 
 const (
-	APP_VER = "1.1.0.22fd993"
+	APP_VER = "1.1.0.0"
 )
 
 var (
@@ -190,9 +190,6 @@ func LoadConfig() *goconfig.ConfigFile {
 	beego.HttpPort = Cfg.MustInt("app", "http_port")
 
 	IsProMode = beego.RunMode == "pro"
-	if IsProMode {
-		beego.SetLevel(beego.LevelInfo)
-	}
 
 	// cache system
 	Cache, err = cache.NewCache("memory", `{"interval":360}`)

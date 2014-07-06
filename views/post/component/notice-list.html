@@ -1,8 +1,8 @@
 {{range .Notifications}}
 <div class="notice cell">
     <div>
-        <a href="{{.FromUser.Link}}" title="{{.FromUser.NickName}}">
-            <img src="{{.FromUser.AvatarLink24}}">
+        <a href="{{.FromUser.Link}}" title="{{.FromUser.NickName}}" class="avatar">
+            <img src="{{.FromUser.AvatarLink24}}" class="small">
         </a>
         <a href="{{.FromUser.Link}}"><strong>{{.FromUser.NickName}}</strong></a>
         {{i18n $.root.Lang "notice.notice_at"}}

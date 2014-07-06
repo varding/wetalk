@@ -173,6 +173,11 @@ textarea.form-control {
   text-decoration: none;
 }
 
+.avatar img.huge{
+  width: 200px;
+  height: 200px;
+}
+
 .avatar img.large {
   width: 64px;
   height: 64px;
@@ -184,8 +189,9 @@ textarea.form-control {
 }
 
 .avatar img.small {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
+  border-radius: 2px;
 }
 
 /* breadcrumb */
