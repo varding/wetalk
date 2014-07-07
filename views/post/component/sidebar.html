@@ -60,33 +60,24 @@
     </a>
 </p>
 {{end}}
-<!-- <div class="box">
-	<div class="cell first">{{i18n .Lang "sidebar.hot_topics"}}</div>
-	<div class="cell last">Are you going to kill her? Just because I don't like her?</div>
-</div>
-
 <div class="box">
-	<div class="cell first">{{i18n .Lang "sidebar.zero_replys"}}</div>
-	<div class="cell last">How can I have millions of dollars?</div>
+    <div class="cell breadcrumb first">
+        {{i18n .Lang "postnav.list_topics"}}
+    </div>
+    <div class="cell nav-topics last">
+        {{template "post/component/nav-topics.html" .}}
+    </div>
 </div>
 <div class="box">
-	<div class="cell first">{{i18n .Lang "sidebar.top_dictionaries"}}</div>
-	<div class="cell last">1. Who am I</div>
+	<div class="cell first">{{i18n .Lang "sidebar.new_comers_notice"}}</div>
+	<div class="cell last">
+		<ul class="sidebar-list">
+			<li><a href="http://golanghome.com/post/16">关于社区的发展，请多多支持！</a></li>
+			<li><a href="http://golanghome.com/post/92">大家可以自定义头像啦！</a></li>
+			<li><a href="http://golanghome.com/post/122">关于申请创建新的话题的说明！</a></li>
+		</ul>
+	</div>
 </div>
-
-<div class="box">
-	<div class="cell first">{{i18n .Lang "sidebar.community_stars"}}</div>
-	<div class="cell last">1. Oh, yeah</div>
-</div> -->
-  <!-- Topic list -->
-        <div class="box">
-            <div class="cell breadcrumb first">
-                {{i18n .Lang "postnav.list_topics"}}
-            </div>
-            <div class="cell nav-topics last">
-                {{template "post/component/nav-topics.html" .}}
-            </div>
-    	</div>
 <div class="box">
 	<div class="cell first">{{i18n .Lang "sidebar.frined_links"}}</div>
 	<div class="cell last">
