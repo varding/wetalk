@@ -20,51 +20,51 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 
-	"github.com/beego/wetalk/modules/article"
 	"github.com/beego/wetalk/modules/models"
+	"github.com/beego/wetalk/modules/page"
 	"github.com/beego/wetalk/modules/utils"
 )
 
-type ArticleAdminRouter struct {
+type PageAdminRouter struct {
 	ModelAdminRouter
-	object models.Article
+	object models.Page
 }
 
-func (this *ArticleAdminRouter) Object() interface{} {
+func (this *PageAdminRouter) Object() interface{} {
 	return &this.object
 }
 
-func (this *ArticleAdminRouter) ObjectQs() orm.QuerySeter {
-	return models.Articles().RelatedSel()
+func (this *PageAdminRouter) ObjectQs() orm.QuerySeter {
+	return models.Pages().RelatedSel()
 }
 
 // view for list model data
-func (this *ArticleAdminRouter) List() {
-	var articles []models.Article
-	qs := models.Articles().RelatedSel()
-	if err := this.SetObjects(qs, &articles); err != nil {
+func (this *PageAdminRouter) List() {
+	var pages []models.Page
+	qs := models.Pages().RelatedSel()
+	if err := this.SetObjects(qs, &pages); err != nil {
 		this.Data["Error"] = err
 		beego.Error(err)
 	}
 }
 
 // view for create object
-func (this *ArticleAdminRouter) Create() {
-	form := article.ArticleAdminForm{Create: true}
+func (this *PageAdminRouter) Create() {
+	form := page.PageAdminForm{Create: true}
 	this.SetFormSets(&form)
 }
 
 // view for new object save
-func (this *ArticleAdminRouter) Save() {
-	form := article.ArticleAdminForm{Create: true}
+func (this *PageAdminRouter) Save() {
+	form := page.PageAdminForm{Create: true}
 	if !this.ValidFormSets(&form) {
 		return
 	}
 
-	var a models.Article
-	form.SetToArticle(&a)
+	var a models.Page
+	form.SetToPage(&a)
 	if err := a.Insert(); err == nil {
-		this.FlashRedirect(fmt.Sprintf("/admin/article/%d", a.Id), 302, "CreateSuccess")
+		this.FlashRedirect(fmt.Sprintf("/admin/page/%d", a.Id), 302, "CreateSuccess")
 		return
 	} else {
 		beego.Error(err)
@@ -73,15 +73,15 @@ func (this *ArticleAdminRouter) Save() {
 }
 
 // view for edit object
-func (this *ArticleAdminRouter) Edit() {
-	form := article.ArticleAdminForm{}
-	form.SetFromArticle(&this.object)
+func (this *PageAdminRouter) Edit() {
+	form := page.PageAdminForm{}
+	form.SetFromPage(&this.object)
 	this.SetFormSets(&form)
 }
 
 // view for update object
-func (this *ArticleAdminRouter) Update() {
-	form := article.ArticleAdminForm{}
+func (this *PageAdminRouter) Update() {
+	form := page.PageAdminForm{}
 	if this.ValidFormSets(&form) == false {
 		return
 	}
@@ -89,11 +89,11 @@ func (this *ArticleAdminRouter) Update() {
 	// get changed field names
 	changes := utils.FormChanges(&this.object, &form)
 
-	url := fmt.Sprintf("/admin/article/%d", this.object.Id)
+	url := fmt.Sprintf("/admin/page/%d", this.object.Id)
 
 	// update changed fields only
 	if len(changes) > 0 {
-		form.SetToArticle(&this.object)
+		form.SetToPage(&this.object)
 		if err := this.object.Update(changes...); err == nil {
 			this.FlashRedirect(url, 302, "UpdateSuccess")
 			return
@@ -107,18 +107,18 @@ func (this *ArticleAdminRouter) Update() {
 }
 
 // view for confirm delete object
-func (this *ArticleAdminRouter) Confirm() {
+func (this *PageAdminRouter) Confirm() {
 }
 
 // view for delete object
-func (this *ArticleAdminRouter) Delete() {
+func (this *PageAdminRouter) Delete() {
 	if this.FormOnceNotMatch() {
 		return
 	}
 
 	// delete object
 	if err := this.object.Delete(); err == nil {
-		this.FlashRedirect("/admin/article", 302, "DeleteSuccess")
+		this.FlashRedirect("/admin/page", 302, "DeleteSuccess")
 		return
 	} else {
 		beego.Error(err)

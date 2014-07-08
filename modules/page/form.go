@@ -12,7 +12,7 @@
 // License for the specific language governing permissions and limitations
 // under the License.
 
-package article
+package page
 
 import (
 	"github.com/astaxie/beego/validation"
@@ -21,7 +21,7 @@ import (
 	"github.com/beego/wetalk/modules/utils"
 )
 
-type ArticleAdminForm struct {
+type PageAdminForm struct {
 	Create     bool   `form:"-"`
 	User       int    `form:"attr(rel,select2-admin-model);attr(data-model,User)" valid:"Required"`
 	LastAuthor int    `form:"attr(rel,select2-admin-model);attr(data-model,User)" valid:""`
@@ -31,37 +31,37 @@ type ArticleAdminForm struct {
 	IsPublish  bool   ``
 }
 
-func (form *ArticleAdminForm) Valid(v *validation.Validation) {
+func (form *PageAdminForm) Valid(v *validation.Validation) {
 	user := models.User{Id: form.User}
 	if user.Read() != nil {
 		v.SetError("User", "admin.not_found_by_id")
 	}
 }
 
-func (form *ArticleAdminForm) SetFromArticle(article *models.Article) {
-	utils.SetFormValues(article, form)
+func (form *PageAdminForm) SetFromPage(page *models.Page) {
+	utils.SetFormValues(page, form)
 
-	if article.User != nil {
-		form.User = article.User.Id
+	if page.User != nil {
+		form.User = page.User.Id
 	}
 
-	if article.LastAuthor != nil {
-		form.LastAuthor = article.LastAuthor.Id
+	if page.LastAuthor != nil {
+		form.LastAuthor = page.LastAuthor.Id
 	}
 }
 
-func (form *ArticleAdminForm) SetToArticle(article *models.Article) {
-	utils.SetFormValues(form, article)
+func (form *PageAdminForm) SetToPage(page *models.Page) {
+	utils.SetFormValues(form, page)
 
-	if article.User == nil {
-		article.User = &models.User{}
+	if page.User == nil {
+		page.User = &models.User{}
 	}
-	article.User.Id = form.User
+	page.User.Id = form.User
 
-	if article.LastAuthor == nil {
-		article.LastAuthor = &models.User{}
+	if page.LastAuthor == nil {
+		page.LastAuthor = &models.User{}
 	}
-	article.LastAuthor.Id = form.LastAuthor
+	page.LastAuthor.Id = form.LastAuthor
 
-	article.ContentCache = utils.RenderMarkdown(article.Content)
+	page.ContentCache = utils.RenderMarkdown(page.Content)
 }

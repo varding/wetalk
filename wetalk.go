@@ -25,10 +25,10 @@ import (
 	"github.com/beego/wetalk/modules/utils"
 	"github.com/beego/wetalk/routers/admin"
 	"github.com/beego/wetalk/routers/api"
-	"github.com/beego/wetalk/routers/article"
 	"github.com/beego/wetalk/routers/attachment"
 	"github.com/beego/wetalk/routers/auth"
 	"github.com/beego/wetalk/routers/base"
+	"github.com/beego/wetalk/routers/page"
 	"github.com/beego/wetalk/routers/post"
 	"github.com/beego/wetalk/setting"
 
@@ -46,11 +46,11 @@ func initialize() {
 	if setting.IsProMode {
 		beego.SetLogger("file", `{"filename":"logs/prod.log"}`)
 		beego.SetLevel(beego.LevelInfo)
+		beego.BeeLogger.DelLogger("console")
 	} else {
 		beego.SetLogger("file", `{"filename":"logs/dev.log"}`)
 		beego.SetLevel(beego.LevelTrace)
 	}
-	beego.BeeLogger.DelLogger("console")
 	beego.SetLogFuncCall(true)
 
 	//check local search function
@@ -173,7 +173,7 @@ func main() {
 		"comment":  new(admin.CommentAdminRouter),
 		"topic":    new(admin.TopicAdminRouter),
 		"category": new(admin.CategoryAdminRouter),
-		"article":  new(admin.ArticleAdminRouter),
+		"page":     new(admin.PageAdminRouter),
 	}
 	for name, router := range routes {
 		beego.Router(fmt.Sprintf("/admin/:model(%s)", name), router, "get:List")
@@ -185,14 +185,14 @@ func main() {
 	// "robot.txt"
 	beego.Router("/robot.txt", &base.RobotRouter{})
 
-	articleR := new(article.ArticleRouter)
-	beego.Router("/:slug", articleR, "get:Show")
+	pageR := new(page.PageRouter)
+	beego.Router("/:slug", pageR, "get:Show")
 
 	if beego.RunMode == "dev" {
 		beego.Router("/test/:tmpl(mail/.*)", new(base.TestRouter))
 
 		//enable debug for orm
-		orm.Debug = true
+		orm.Debug = false
 	}
 
 	// For all unknown pages.

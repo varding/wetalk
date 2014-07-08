@@ -24,7 +24,7 @@ import (
 	"github.com/beego/wetalk/setting"
 )
 
-type Article struct {
+type Page struct {
 	Id           int
 	User         *User     `orm:"rel(fk)"`
 	Uri          string    `orm:"size(60);unqiue"`
@@ -37,21 +37,21 @@ type Article struct {
 	Updated      time.Time `orm:"auto_now"`
 }
 
-func (m *Article) Insert() error {
+func (m *Page) Insert() error {
 	if _, err := orm.NewOrm().Insert(m); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *Article) Read(fields ...string) error {
+func (m *Page) Read(fields ...string) error {
 	if err := orm.NewOrm().Read(m, fields...); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *Article) Update(fields ...string) error {
+func (m *Page) Update(fields ...string) error {
 	fields = append(fields, "Updated")
 	if _, err := orm.NewOrm().Update(m, fields...); err != nil {
 		return err
@@ -59,18 +59,18 @@ func (m *Article) Update(fields ...string) error {
 	return nil
 }
 
-func (m *Article) Delete() error {
+func (m *Page) Delete() error {
 	if _, err := orm.NewOrm().Delete(m); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *Article) String() string {
+func (m *Page) String() string {
 	return utils.ToStr(m.Id)
 }
 
-func (m *Article) Link() string {
+func (m *Page) Link() string {
 	uri := m.Uri
 	if len(uri) > 0 && uri[0] == '/' {
 		uri = uri[1:]
@@ -78,11 +78,11 @@ func (m *Article) Link() string {
 	return fmt.Sprintf("%s%s", setting.AppUrl, uri)
 }
 
-func (m *Article) GetTitle() string {
+func (m *Page) GetTitle() string {
 	return m.Title
 }
 
-func (m *Article) GetContentCache() string {
+func (m *Page) GetContentCache() string {
 	var content, contentCache string
 	content = m.Content
 	contentCache = m.ContentCache
@@ -94,10 +94,10 @@ func (m *Article) GetContentCache() string {
 	}
 }
 
-func Articles() orm.QuerySeter {
-	return orm.NewOrm().QueryTable("article").OrderBy("-Id")
+func Pages() orm.QuerySeter {
+	return orm.NewOrm().QueryTable("page").OrderBy("-Id")
 }
 
 func init() {
-	orm.RegisterModel(new(Article))
+	orm.RegisterModel(new(Page))
 }

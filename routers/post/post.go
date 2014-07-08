@@ -455,7 +455,6 @@ func (this *PostRouter) SingleSubmit() {
 		var pattern = "[ ]*@[a-zA-Z0-9]+[ ]*"
 		r := regexp.MustCompile(pattern)
 		userNames := r.FindAllString(comment.Message, -1)
-		fmt.Println(userNames)
 		for _, userName := range userNames {
 			bUserName := strings.TrimPrefix(strings.TrimSpace(userName), "@")
 			user := &models.User{

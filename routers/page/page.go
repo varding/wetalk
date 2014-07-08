@@ -12,32 +12,32 @@
 // License for the specific language governing permissions and limitations
 // under the License.
 
-package article
+package page
 
 import (
 	"github.com/beego/wetalk/modules/models"
 	"github.com/beego/wetalk/routers/base"
 )
 
-type ArticleRouter struct {
+type PageRouter struct {
 	base.BaseRouter
 }
 
-func (this *ArticleRouter) loadArticle(article *models.Article) bool {
+func (this *PageRouter) loadPage(page *models.Page) bool {
 	uri := this.Ctx.Request.RequestURI
-	err := models.Articles().RelatedSel("User").Filter("IsPublish", true).Filter("Uri", uri).One(article)
+	err := models.Pages().RelatedSel("User").Filter("IsPublish", true).Filter("Uri", uri).One(page)
 	if err == nil {
-		this.Data["Article"] = article
+		this.Data["Page"] = page
 	} else {
 		this.Abort("404")
 	}
 	return err != nil
 }
 
-func (this *ArticleRouter) Show() {
-	this.TplNames = "article/show.html"
-	article := models.Article{}
-	if this.loadArticle(&article) {
+func (this *PageRouter) Show() {
+	this.TplNames = "page/show.html"
+	page := models.Page{}
+	if this.loadPage(&page) {
 		return
 	}
 }
