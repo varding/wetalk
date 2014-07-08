@@ -225,6 +225,10 @@
   margin-right: 10px;
 }
 
+#post-new textarea{
+  height: 345px;
+}
+
 .post-show .post-title {
   font-size: 22px;
   line-height: 1.3em;
