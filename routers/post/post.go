@@ -52,7 +52,7 @@ func (this *PostListRouter) Home() {
 	this.setCategories(&cats)
 
 	var posts []models.Post
-	qs := models.Posts().OrderBy("-Created").Limit(25).RelatedSel()
+	qs := models.Posts().OrderBy("-Updated").Limit(25).RelatedSel()
 
 	models.ListObjects(qs, &posts)
 	this.Data["Posts"] = posts
@@ -124,7 +124,7 @@ func (this *PostListRouter) Navs() {
 		cnt, _ := models.CountObjects(qs)
 		pager := this.SetPaginator(pers, cnt)
 
-		qs = qs.OrderBy("-Updated").Limit(pers, pager.Offset()).RelatedSel()
+		qs = qs.OrderBy("-Created").Limit(pers, pager.Offset()).RelatedSel()
 
 		models.ListObjects(qs, &posts)
 
