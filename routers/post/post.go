@@ -51,7 +51,7 @@ func (this *PostListRouter) Home() {
 
 	//get posts by updated datetime desc order
 	var posts []models.Post
-	qs := models.Posts().OrderBy("-Updated").OrderBy("-Created").Limit(setting.PostCountPerPage).RelatedSel()
+	qs := models.Posts().OrderBy("-Updated").Limit(setting.PostCountPerPage).RelatedSel()
 
 	models.ListObjects(qs, &posts)
 	this.Data["Posts"] = posts
@@ -61,7 +61,7 @@ func (this *PostListRouter) Home() {
 	this.setCategories(&cats)
 	var topics []models.Topic
 	this.setTopics(&topics)
-	this.Data["CategorySlug"] = ""
+	this.Data["CategorySlug"] = "hot"
 	this.Data["TopicSlug"] = ""
 }
 
