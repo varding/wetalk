@@ -120,7 +120,8 @@ func main() {
 	beego.Router("/user/:username/posts", user, "get:Posts")
 	beego.Router("/user/:username/following", user, "get:Following")
 	beego.Router("/user/:username/followers", user, "get:Followers")
-	beego.Router("/user/:username/favs", user, "get:Favs")
+	beego.Router("/user/:username/follow/topics", user, "get:FollowTopics")
+	beego.Router("/user/:username/favorite/posts", user, "get:FavoritePosts")
 	beego.Router("/user/:username", user, "get:Home")
 
 	login := new(auth.LoginRouter)
@@ -159,6 +160,7 @@ func main() {
 	apiR := new(api.ApiRouter)
 	beego.Router("/api/user", apiR, "post:Users")
 	beego.Router("/api/md", apiR, "post:Markdown")
+	beego.Router("/api/post", apiR, "post:Post")
 
 	adminDashboard := new(admin.AdminDashboardRouter)
 	beego.Router("/admin", adminDashboard)

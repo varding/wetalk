@@ -38,34 +38,36 @@ func (this *PostListRouter) setCategories(cats *[]models.Category) {
 	this.Data["Categories"] = *cats
 }
 
-func (this *PostListRouter) setTopicsOfCat(topics *[]models.Topic, cat *models.Category) {
-	post.ListTopicsOfCat(topics, cat)
+func (this *PostListRouter) setTopics(topics *[]models.Topic) {
+	//@see modules/post/topic_util.go
+	post.ListTopics(topics)
 	this.Data["Topics"] = *topics
 }
 
-// Get implemented Get method for HomeRouter.
+//Get the latest replied posts
 func (this *PostListRouter) Home() {
 	this.Data["IsHome"] = true
 	this.TplNames = "post/home.html"
 
-	var cats []models.Category
-	this.setCategories(&cats)
-
+	//get posts by updated datetime desc order
 	var posts []models.Post
-	qs := models.Posts().OrderBy("-Updated").Limit(25).RelatedSel()
+	qs := models.Posts().OrderBy("-Updated").OrderBy("-Created").Limit(setting.PostCountPerPage).RelatedSel()
 
 	models.ListObjects(qs, &posts)
 	this.Data["Posts"] = posts
 
-	this.Data["CategorySlug"] = "hot"
-
+	//sidebar cats and topics
+	var cats []models.Category
+	this.setCategories(&cats)
 	var topics []models.Topic
-	post.ListTopics(&topics)
-	this.Data["Topics"] = topics
+	this.setTopics(&topics)
+	this.Data["CategorySlug"] = ""
+	this.Data["TopicSlug"] = ""
 }
 
-// Get implemented Get method for HomeRouter.
+// Get the posts by category
 func (this *PostListRouter) Category() {
+	this.Data["IsCategory"] = true
 	this.TplNames = "post/category.html"
 
 	slug := this.GetString(":slug")
@@ -75,28 +77,24 @@ func (this *PostListRouter) Category() {
 		return
 	}
 
-	pers := 25
-
+	//get posts by category slug
 	qs := models.Posts().Filter("Category", &cat)
-
 	cnt, _ := models.CountObjects(qs)
-	pager := this.SetPaginator(pers, cnt)
-
-	qs = qs.OrderBy("-Created").Limit(pers, pager.Offset()).RelatedSel()
-
+	pager := this.SetPaginator(setting.PostCountPerPage, cnt)
+	qs = qs.OrderBy("-Created").Limit(setting.PostCountPerPage, pager.Offset()).RelatedSel()
 	var posts []models.Post
 	models.ListObjects(qs, &posts)
 
-	this.Data["Posts"] = posts
 	this.Data["Category"] = &cat
-	this.Data["CategorySlug"] = cat.Slug
-	this.Data["IsCategory"] = true
+	this.Data["Posts"] = posts
 
+	//sidebar cats and topics
 	var cats []models.Category
 	this.setCategories(&cats)
-
 	var topics []models.Topic
-	this.setTopicsOfCat(&topics, &cat)
+	this.setTopics(&topics)
+	this.Data["CategorySlug"] = cat.Slug
+	this.Data["TopicSlug"] = ""
 }
 
 // Get implemented Get method for HomeRouter.
@@ -110,91 +108,66 @@ func (this *PostListRouter) Navs() {
 		}
 	}
 
-	this.Data["CategorySlug"] = slug
 	this.TplNames = fmt.Sprintf("post/navs/%s.html", slug)
-
-	pers := 25
 
 	var posts []models.Post
 
 	switch slug {
 	case "recent":
+		//get posts order by created desc
 		qs := models.Posts()
-
 		cnt, _ := models.CountObjects(qs)
-		pager := this.SetPaginator(pers, cnt)
-
-		qs = qs.OrderBy("-Created").Limit(pers, pager.Offset()).RelatedSel()
-
+		pager := this.SetPaginator(setting.PostCountPerPage, cnt)
+		qs = qs.OrderBy("-Created").Limit(setting.PostCountPerPage, pager.Offset()).RelatedSel()
 		models.ListObjects(qs, &posts)
-
-		var cats []models.Category
-		this.setCategories(&cats)
-
 	case "best":
+		//get posts filtered by IsBest and order by created desc
 		qs := models.Posts().Filter("IsBest", true)
-
 		cnt, _ := models.CountObjects(qs)
-		pager := this.SetPaginator(pers, cnt)
-
-		qs = qs.OrderBy("-Created").Limit(pers, pager.Offset()).RelatedSel()
-
+		pager := this.SetPaginator(setting.PostCountPerPage, cnt)
+		qs = qs.OrderBy("-Created").Limit(setting.PostCountPerPage, pager.Offset()).RelatedSel()
 		models.ListObjects(qs, &posts)
-
-		var cats []models.Category
-		this.setCategories(&cats)
-
 	case "cold":
+		//get those posts with no replys and order by created desc
 		qs := models.Posts().Filter("Replys", 0)
-
 		cnt, _ := models.CountObjects(qs)
-		pager := this.SetPaginator(pers, cnt)
-
-		qs = qs.OrderBy("-Created").Limit(pers, pager.Offset()).RelatedSel()
-
+		pager := this.SetPaginator(setting.PostCountPerPage, cnt)
+		qs = qs.OrderBy("-Created").Limit(setting.PostCountPerPage, pager.Offset()).RelatedSel()
 		models.ListObjects(qs, &posts)
-
-		var cats []models.Category
-		this.setCategories(&cats)
-
 	case "favs":
-		var topicIds orm.ParamsList
-		nums, _ := models.FollowTopics().Filter("User", &this.User.Id).OrderBy("-Created").ValuesFlat(&topicIds, "Topic")
+		var postIds orm.ParamsList
+		nums, _ := this.User.FavoritePosts().OrderBy("-Created").ValuesFlat(&postIds, "Post")
 		if nums > 0 {
-			qs := models.Posts().Filter("Topic__in", topicIds)
-
+			qs := models.Posts().Filter("Id__in", postIds)
 			cnt, _ := models.CountObjects(qs)
-			pager := this.SetPaginator(pers, cnt)
-
-			qs = qs.OrderBy("-Created").Limit(pers, pager.Offset()).RelatedSel()
-
+			pager := this.SetPaginator(setting.PostCountPerPage, cnt)
+			qs = qs.OrderBy("-Created").Limit(setting.PostCountPerPage, pager.Offset()).RelatedSel()
 			models.ListObjects(qs, &posts)
-
-			var topics []models.Topic
-			nums, _ = models.Topics().Filter("Id__in", topicIds).Limit(8).All(&topics)
-			this.Data["Topics"] = topics
-			this.Data["TopicsMore"] = nums >= 8
 		}
-
 	case "follow":
 		var userIds orm.ParamsList
 		nums, _ := this.User.FollowingUsers().OrderBy("-Created").ValuesFlat(&userIds, "FollowUser")
 		if nums > 0 {
 			qs := models.Posts().Filter("User__in", userIds)
-
 			cnt, _ := models.CountObjects(qs)
-			pager := this.SetPaginator(pers, cnt)
-
-			qs = qs.OrderBy("-Created").Limit(pers, pager.Offset()).RelatedSel()
-
+			pager := this.SetPaginator(setting.PostCountPerPage, cnt)
+			qs = qs.OrderBy("-Created").Limit(setting.PostCountPerPage, pager.Offset()).RelatedSel()
 			models.ListObjects(qs, &posts)
 		}
 	}
 
 	this.Data["Posts"] = posts
+
+	//sidebar cats and topics
+	var cats []models.Category
+	this.setCategories(&cats)
+	var topics []models.Topic
+	this.setTopics(&topics)
+	this.Data["CategorySlug"] = slug
+	this.Data["TopicSlug"] = ""
 }
 
-// Get implemented Get method for HomeRouter.
+//topic page
 func (this *PostListRouter) Topic() {
 	slug := this.GetString(":slug")
 
@@ -207,14 +180,12 @@ func (this *PostListRouter) Topic() {
 			return
 		}
 
-		pers := 25
-
 		qs := models.Posts().Filter("Topic", &topic)
 
 		cnt, _ := models.CountObjects(qs)
-		pager := this.SetPaginator(pers, cnt)
+		pager := this.SetPaginator(setting.PostCountPerPage, cnt)
 
-		qs = qs.OrderBy("-Created").Limit(pers, pager.Offset()).RelatedSel()
+		qs = qs.OrderBy("-Created").Limit(setting.PostCountPerPage, pager.Offset()).RelatedSel()
 
 		var posts []models.Post
 		models.ListObjects(qs, &posts)
@@ -228,10 +199,20 @@ func (this *PostListRouter) Topic() {
 			HasFavorite = models.FollowTopics().Filter("User", &this.User).Filter("Topic", &topic).Exist()
 		}
 		this.Data["HasFavorite"] = HasFavorite
+
+		//sidebar data
+		var cats []models.Category
+		post.ListCategories(&cats)
+		var topics []models.Topic
+		post.ListTopics(&topics)
+		this.Data["Topics"] = topics
+		this.Data["Categories"] = cats
+		this.Data["CategorySlug"] = ""
+		this.Data["TopicSlug"] = slug
 	}
 }
 
-// Get implemented Get method for HomeRouter.
+//Mark this topic
 func (this *PostListRouter) TopicSubmit() {
 	slug := this.GetString(":slug")
 
@@ -390,6 +371,14 @@ func (this *PostRouter) Single() {
 	//mark all notification as read
 	if this.IsLogin {
 		models.MarkNortificationAsRead(this.User.Id, postMd.Id)
+	}
+
+	//check whether this post is favorited
+	num, _ := this.User.FavoritePosts().Filter("Post__Id", postMd.Id).Filter("IsFav", true).Count()
+	if num != 0 {
+		this.Data["IsPostFav"] = true
+	} else {
+		this.Data["IsPostFav"] = false
 	}
 
 	form := post.CommentForm{}

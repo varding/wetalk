@@ -22,8 +22,8 @@
 						        </a>
 			 				</td>
 			 				<td>
-			 					 <a href="{{.User.Link}}/favs" class="color-link-hover">
-						            <strong>{{.User.FavTopics}}</strong> <br/><span>{{i18n .Lang "user.favourite"}}</span>
+			 					 <a href="{{.User.Link}}/favorite/posts" class="color-link-hover">
+						            <strong>{{.User.FavPosts}}</strong> <br/><span>{{i18n .Lang "user.favorite"}}</span>
 						        </a>
 			 				</td>
 			 			</tr>
@@ -61,14 +61,6 @@
 </p>
 {{end}}
 <div class="box">
-    <div class="cell breadcrumb first">
-        {{i18n .Lang "postnav.list_topics"}}
-    </div>
-    <div class="cell nav-topics last">
-        {{template "post/component/nav-topics.html" .}}
-    </div>
-</div>
-<div class="box">
 	<div class="cell first">{{i18n .Lang "sidebar.new_comers_notice"}}</div>
 	<div class="cell last">
 		<ul class="sidebar-list">
@@ -77,6 +69,22 @@
 			<li><a href="http://golanghome.com/post/122">关于申请创建新的话题的说明！</a></li>
 		</ul>
 	</div>
+</div>
+<div class="box">
+    <div class="cell breadcrumb first">
+        {{i18n .Lang "postnav.list_cats"}}
+    </div>
+    <div class="cell nav-cats last">
+        {{template "post/component/nav-cats.html" .}}
+    </div>
+</div>
+<div class="box">
+    <div class="cell breadcrumb first">
+        {{i18n .Lang "postnav.list_topics"}}
+    </div>
+    <div class="cell nav-topics last">
+        {{template "post/component/nav-topics.html" .}}
+    </div>
 </div>
 <div class="box">
 	<div class="cell first">{{i18n .Lang "sidebar.frined_links"}}</div>

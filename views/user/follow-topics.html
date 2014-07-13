@@ -12,14 +12,11 @@
         <div id="content" class="col-md-9">
             <div class="box">
                 <div class="cell breadcrumb first">
-                    <a href="{{.TheUser.Link}}"><i class="icon-user"></i></a><i class="divider icon-angle-right"></i>{{i18n .Lang "user.recent_submited_posts"}}
+                    <a href="{{.TheUser.Link}}"><i class="icon-user"></i></a><i class="divider icon-angle-right"></i>{{i18n .Lang "user.following_topics" .TheUser.NickName}}
                 </div>
-                {{if .TheUserPosts}}
-                <div class="post-list">
-                    {{template "post/component/posts-user-home.html" dict "root" . "Posts" .TheUserPosts}}
-                </div>
-                <div class="cell last low">
-                    {{template "base/paginator_pn.html" .}}
+                {{if .TheUserFollowTopics}}
+                <div class="cell nav-topics last">
+                    {{template "post/component/nav-topics.html" dict "Topics" .TheUserFollowTopics "Lang" .Lang}}
                 </div>
                 {{else}}
                 <div class="cell last">

@@ -160,15 +160,42 @@ func Comments() orm.QuerySeter {
 // user favorite posts
 type FavoritePost struct {
 	Id      int
-	User    *User     `orm:"rel(fk)"`
-	Post    *Post     `orm:"rel(fk)"`
+	User    *User `orm:"rel(fk)"`
+	Post    *Post `orm:"rel(fk)"`
+	IsFav   bool
 	Created time.Time `orm:"auto_now_add"`
+	Updated time.Time `orm:"auto_now"`
 }
 
 func (*FavoritePost) TableUnique() [][]string {
 	return [][]string{
 		[]string{"User", "Post"},
 	}
+}
+
+func (m *FavoritePost) Insert() error {
+	if _, err := orm.NewOrm().Insert(m); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *FavoritePost) Read(fields ...string) error {
+	if err := orm.NewOrm().Read(m, fields...); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *FavoritePost) Update(fields ...string) error {
+	if _, err := orm.NewOrm().Update(m, fields...); err != nil {
+		return err
+	}
+	return nil
+}
+
+func FavoritePosts() orm.QuerySeter {
+	return orm.NewOrm().QueryTable("favorite_post")
 }
 
 func init() {

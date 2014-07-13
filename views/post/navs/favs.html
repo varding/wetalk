@@ -4,18 +4,10 @@
 {{define "body"}}
 <div class="row">
     <div id="content" class="col-md-8">
-        <div class="box">
-            <div class="cell nav-cats breadcrumb first{{if not .Topics}} last{{end}}">
+         <div class="box">
+            <div class="cell nav-cats breadcrumb first last">
                 {{template "post/component/nav-list.html" .}}
             </div>
-            {{if .Topics}}
-            <div class="cell nav-topics last">
-                {{template "post/component/nav-topics.html" .}}
-                {{if .TopicsMore}}
-                <div class="pull-right"><a target="_blank" href="{{.User.Link}}/favs">{{i18n .Lang "more"}} <i class="icon-double-angle-right"></i></a></div>
-                {{end}}
-            </div>
-            {{end}}
         </div>
         <div class="box">
             <div class="cell first breadcrumb">

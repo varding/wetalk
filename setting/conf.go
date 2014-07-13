@@ -112,6 +112,10 @@ var (
 	QiniuAvatarDomain   string
 )
 
+var (
+	PostCountPerPage int
+)
+
 const (
 	LangEnUS = iota
 	LangZhCN
@@ -357,6 +361,9 @@ func reloadConfig() {
 	QiniuPostDomain = Cfg.MustValue("qiniu", "qiniu_post_domain")
 	QiniuAvatarBucket = Cfg.MustValue("qiniu", "qiniu_avatar_bucket")
 	QiniuAvatarDomain = Cfg.MustValue("qiniu", "qiniu_avatar_domain")
+
+	//post
+	PostCountPerPage = Cfg.MustInt("post", "post_count_per_page", 20)
 }
 
 func settingLocales() {

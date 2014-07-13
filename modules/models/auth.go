@@ -58,6 +58,7 @@ type User struct {
 	PublicEmail bool      ``
 	Followers   int       ``
 	Following   int       ``
+	FavPosts    int       ``
 	FavTopics   int       ``
 	IsAdmin     bool      `orm:"index"`
 	IsActive    bool      `orm:"index"`
@@ -160,6 +161,10 @@ func (m *User) RecentPosts() orm.QuerySeter {
 
 func (m *User) RecentComments() orm.QuerySeter {
 	return Comments().Filter("User", m.Id)
+}
+
+func (m *User) FavoritePosts() orm.QuerySeter {
+	return FavoritePosts().Filter("User", m.Id)
 }
 
 func Users() orm.QuerySeter {
