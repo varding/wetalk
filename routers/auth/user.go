@@ -52,6 +52,7 @@ func (this *UserRouter) getUser(user *models.User) bool {
 }
 
 func (this *UserRouter) Home() {
+	this.Data["IsUserHomePage"] = true
 	this.TplNames = "user/home.html"
 
 	var user models.User

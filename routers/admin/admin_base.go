@@ -46,7 +46,7 @@ func (this *BaseAdminRouter) NestPrepare() {
 	}
 
 	// current in admin page
-	this.Data["IsAdmin"] = true
+	this.Data["IsAdminPage"] = true
 
 	if app, ok := this.AppController.(ModelPreparer); ok {
 		app.ModelPrepare()

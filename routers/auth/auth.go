@@ -139,7 +139,7 @@ func (this *RegisterRouter) Get() {
 		return
 	}
 
-	this.Data["IsRegister"] = true
+	this.Data["IsRegisterPage"] = true
 	this.TplNames = "auth/register.html"
 
 	form := auth.RegisterForm{Locale: this.Locale}
@@ -148,7 +148,7 @@ func (this *RegisterRouter) Get() {
 
 // Register implemented Post method for RegisterRouter.
 func (this *RegisterRouter) Register() {
-	this.Data["IsRegister"] = true
+	this.Data["IsRegisterPage"] = true
 	this.TplNames = "auth/register.html"
 
 	// no need login

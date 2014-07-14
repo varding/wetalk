@@ -20,17 +20,18 @@
         {{end}}
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right navbar-menu">
-                <li><a href="{{.AppUrl}}">{{i18n .Lang "home"}}</a></li>
+                <li {{if .IsHomePage}}class="active"{{end}}><a href="{{.AppUrl}}">{{i18n .Lang "home"}}</a></li>
+                <!--<li><a href="{{.AppUrl}}column">{{i18n .Lang "column"}}</a></li>-->
                 {{if .IsLogin}}
-                <li><a href="{{.User.Link}}">{{.User.NickName}}</a></li>
+                <li {{if .IsUserHomePage}}class="active"{{end}}><a href="{{.User.Link}}">{{.User.NickName}}</a></li>
                 {{if .User.IsAdmin}}
                     <li><a href="{{.AppUrl}}admin">{{i18n .Lang "admin.admin_center"}}</a></li>
                 {{end}}
-                <li><a href="{{.AppUrl}}settings/profile">{{i18n .Lang "auth.user_settings"}}</a></li>
+                <li {{if .IsUserSettingPage}}class="active"{{end}}><a href="{{.AppUrl}}settings/profile">{{i18n .Lang "auth.user_settings"}}</a></li>
                 <li><a href="{{.AppUrl}}logout">{{i18n .Lang "auth.logout"}}</a></li>
                 {{else}}
-                <li><a href="{{.AppUrl}}login">{{i18n .Lang "auth.login"}}</a></li>
-                <li><a href="{{.AppUrl}}register">{{i18n .Lang "auth.register"}}</a></li>
+                <li {{if .IsLoginPage}}class="active"{{end}}><a href="{{.AppUrl}}login">{{i18n .Lang "auth.login"}}</a></li>
+                <li {{if .IsRegisterPage}}class="active"{{end}}><a href="{{.AppUrl}}register">{{i18n .Lang "auth.register"}}</a></li>
                 {{end}}
             </ul>
         </div>

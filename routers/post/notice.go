@@ -10,6 +10,7 @@ type NoticeRouter struct {
 }
 
 func (this *NoticeRouter) Get() {
+	this.Data["IsHomePage"] = true
 	this.TplNames = "post/notice.html"
 
 	if this.CheckLoginRedirect() {

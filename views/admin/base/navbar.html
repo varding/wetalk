@@ -17,7 +17,7 @@
                 {{if .IsLogin}}
                 <li><a href="{{.User.Link}}">{{.User.NickName}}</a></li>
                 {{if .User.IsAdmin}}
-                    <li><a href="{{.AppUrl}}admin">{{i18n .Lang "admin.admin_center"}}</a></li>
+                    <li {{if .IsAdminPage}}class="active"{{end}}><a href="{{.AppUrl}}admin">{{i18n .Lang "admin.admin_center"}}</a></li>
                 {{end}}
                 <li><a href="{{.AppUrl}}settings/profile">{{i18n .Lang "auth.user_settings"}}</a></li>
                 <li><a href="{{.AppUrl}}logout">{{i18n .Lang "auth.logout"}}</a></li>

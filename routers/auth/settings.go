@@ -28,6 +28,7 @@ type SettingsRouter struct {
 }
 
 func (this *SettingsRouter) ChangePassword() {
+	this.Data["IsUserSettingPage"] = true
 	this.TplNames = "settings/change_password.html"
 
 	//need login
@@ -40,6 +41,7 @@ func (this *SettingsRouter) ChangePassword() {
 }
 
 func (this *SettingsRouter) ChangePasswordSave() {
+	this.Data["IsUserSettingPage"] = true
 	this.TplNames = "settings/change_password.html"
 	if this.CheckLoginRedirect() {
 		return
@@ -61,6 +63,7 @@ func (this *SettingsRouter) ChangePasswordSave() {
 }
 
 func (this *SettingsRouter) AvatarSetting() {
+	this.Data["IsUserSettingPage"] = true
 	this.TplNames = "settings/user_avatar.html"
 	//need login
 	if this.CheckLoginRedirect() {
@@ -73,6 +76,7 @@ func (this *SettingsRouter) AvatarSetting() {
 }
 
 func (this *SettingsRouter) AvatarSettingSave() {
+	this.Data["IsUserSettingPage"] = true
 	this.TplNames = "settings/user_avatar.html"
 	//need login
 	if this.CheckLoginRedirect() {
@@ -93,6 +97,7 @@ func (this *SettingsRouter) AvatarSettingSave() {
 }
 
 func (this *SettingsRouter) AvatarUpload() {
+	this.Data["IsUserSettingPage"] = true
 	this.TplNames = "settings/user_avatar.html"
 	//need login and active
 	if this.CheckLoginRedirect() {
@@ -118,6 +123,7 @@ func (this *SettingsRouter) AvatarUpload() {
 
 // Profile implemented user profile settings page.
 func (this *SettingsRouter) Profile() {
+	this.Data["IsUserSettingPage"] = true
 	this.TplNames = "settings/profile.html"
 
 	// need login
@@ -133,6 +139,7 @@ func (this *SettingsRouter) Profile() {
 
 // ProfileSave implemented save user profile.
 func (this *SettingsRouter) ProfileSave() {
+	this.Data["IsUserSettingPage"] = true
 	this.TplNames = "settings/profile.html"
 	if this.CheckLoginRedirect() {
 		return

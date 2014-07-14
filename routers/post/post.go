@@ -46,7 +46,7 @@ func (this *PostListRouter) setTopics(topics *[]models.Topic) {
 
 //Get the latest replied posts
 func (this *PostListRouter) Home() {
-	this.Data["IsHome"] = true
+	this.Data["IsHomePage"] = true
 	this.TplNames = "post/home.html"
 
 	//get posts by updated datetime desc order
@@ -67,6 +67,7 @@ func (this *PostListRouter) Home() {
 
 // Get the posts by category
 func (this *PostListRouter) Category() {
+	this.Data["IsHomePage"] = true
 	this.Data["IsCategory"] = true
 	this.TplNames = "post/category.html"
 
@@ -99,6 +100,7 @@ func (this *PostListRouter) Category() {
 
 // Get implemented Get method for HomeRouter.
 func (this *PostListRouter) Navs() {
+	this.Data["IsHomePage"] = true
 	slug := this.GetString(":slug")
 
 	switch slug {
@@ -169,6 +171,7 @@ func (this *PostListRouter) Navs() {
 
 //topic page
 func (this *PostListRouter) Topic() {
+	this.Data["IsHomePage"] = true
 	slug := this.GetString(":slug")
 
 	switch slug {
@@ -214,6 +217,7 @@ func (this *PostListRouter) Topic() {
 
 //Mark this topic
 func (this *PostListRouter) TopicSubmit() {
+	this.Data["IsHomePage"] = true
 	slug := this.GetString(":slug")
 
 	topic := models.Topic{Slug: slug}
@@ -254,6 +258,7 @@ type PostRouter struct {
 }
 
 func (this *PostRouter) New() {
+	this.Data["IsHomePage"] = true
 	this.TplNames = "post/new.html"
 
 	if this.CheckActiveRedirect() {
@@ -290,6 +295,7 @@ func (this *PostRouter) New() {
 }
 
 func (this *PostRouter) NewSubmit() {
+	this.Data["IsHomePage"] = true
 	this.TplNames = "post/new.html"
 
 	if this.CheckActiveRedirect() {
@@ -358,6 +364,7 @@ func (this *PostRouter) loadComments(post *models.Post, comments *[]*models.Comm
 }
 
 func (this *PostRouter) Single() {
+	this.Data["IsHomePage"] = true
 	this.TplNames = "post/post.html"
 
 	var postMd models.Post
@@ -388,6 +395,7 @@ func (this *PostRouter) Single() {
 }
 
 func (this *PostRouter) SingleSubmit() {
+	this.Data["IsHomePage"] = true
 	this.TplNames = "post/post.html"
 
 	if this.CheckActiveRedirect() {
@@ -480,6 +488,7 @@ func (this *PostRouter) SingleSubmit() {
 }
 
 func (this *PostRouter) Edit() {
+	this.Data["IsHomePage"] = true
 	this.TplNames = "post/edit.html"
 
 	if this.CheckActiveRedirect() {
@@ -499,6 +508,7 @@ func (this *PostRouter) Edit() {
 }
 
 func (this *PostRouter) EditSubmit() {
+	this.Data["IsHomePage"] = true
 	this.TplNames = "post/edit.html"
 
 	if this.CheckActiveRedirect() {
