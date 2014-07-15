@@ -36,6 +36,9 @@ func (this *LoginRouter) Get() {
 	this.TplNames = "auth/login.html"
 
 	loginRedirect := strings.TrimSpace(this.GetString("to"))
+	if loginRedirect == "" {
+		loginRedirect = this.Ctx.Input.Header("Referer")
+	}
 	if utils.IsMatchHost(loginRedirect) == false {
 		loginRedirect = "/"
 	}
