@@ -2,6 +2,7 @@ package post
 
 import (
 	"github.com/beego/wetalk/modules/models"
+	"github.com/beego/wetalk/modules/post"
 	"github.com/beego/wetalk/routers/base"
 )
 
@@ -28,4 +29,11 @@ func (this *NoticeRouter) Get() {
 
 	models.ListObjects(qs, &notifications)
 	this.Data["Notifications"] = notifications
+
+	var cats []models.Category
+	var topics []models.Topic
+	post.ListCategories(&cats)
+	this.Data["Categories"] = cats
+	post.ListTopics(&topics)
+	this.Data["Topics"] = topics
 }
