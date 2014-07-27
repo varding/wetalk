@@ -99,6 +99,8 @@ func (this *PostAdminRouter) Update() {
 
 	// update changed fields only
 	if len(changes) > 0 {
+		//fix the bug of category not updated
+		changes = append(changes, "Category")
 		form.SetToPost(&this.object)
 		if err := this.object.Update(changes...); err == nil {
 			this.FlashRedirect(url, 302, "UpdateSuccess")

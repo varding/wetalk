@@ -114,6 +114,7 @@ func (this *PostListRouter) Category() {
 //Topic Home Page
 func (this *PostListRouter) Topic() {
 	this.Data["IsHomePage"] = true
+	this.Data["IsCategory"] = true
 	this.TplNames = "post/topic.html"
 	//check topic slug
 	slug := this.GetString(":slug")

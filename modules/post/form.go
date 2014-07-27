@@ -135,7 +135,6 @@ type PostAdminForm struct {
 	LastReply  int    `form:"attr(rel,select2-admin-model);attr(data-model,User)" valid:""`
 	LastAuthor int    `form:"attr(rel,select2-admin-model);attr(data-model,User)" valid:""`
 	Topic      int    `form:"type(select);attr(rel,select2)" valid:"Required"`
-	Category   int    `form:"type(select);attr(rel,select2)" valid:"Required"`
 	Lang       int    `form:"type(select);attr(rel,select2)"`
 	IsBest     bool   ``
 }
@@ -161,11 +160,6 @@ func (form *PostAdminForm) Valid(v *validation.Validation) {
 		v.SetError("Topic", "admin.not_found_by_id")
 	}
 
-	cat := models.Category{Id: form.Category}
-	if cat.Read() != nil {
-		v.SetError("Category", "admin.not_found_by_id")
-	}
-
 	if len(i18n.GetLangByIndex(form.Lang)) == 0 {
 		v.SetError("Lang", "Not Found")
 	}
@@ -188,10 +182,6 @@ func (form *PostAdminForm) SetFromPost(post *models.Post) {
 
 	if post.Topic != nil {
 		form.Topic = post.Topic.Id
-	}
-
-	if post.Category != nil {
-		form.Category = post.Category.Id
 	}
 }
 
@@ -217,12 +207,14 @@ func (form *PostAdminForm) SetToPost(post *models.Post) {
 		post.Topic = &models.Topic{}
 	}
 	post.Topic.Id = form.Topic
-
-	if post.Category == nil {
-		post.Category = &models.Category{}
+	//get category
+	topic := &models.Topic{Id: form.Topic}
+	if err := topic.Read("Id"); err == nil {
+		if post.Category == nil {
+			post.Category = &models.Category{}
+		}
+		post.Category.Id = topic.Category.Id
 	}
-	post.Category.Id = form.Category
-
 	post.ContentCache = utils.RenderMarkdown(post.Content)
 }
 
