@@ -38,7 +38,7 @@ import (
 )
 
 const (
-	APP_VER = "1.1.0.0"
+	APP_VER = "1.2.0.0"
 )
 
 var (
@@ -152,6 +152,10 @@ var (
 	GlobalConfPath   = "conf/global/app.ini"
 	AppConfPath      = "conf/app.ini"
 	CompressConfPath = "conf/compress.json"
+)
+
+var (
+	DefaultLang = LangZhCN
 )
 
 // LoadConfig loads configuration file.

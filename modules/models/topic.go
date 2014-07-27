@@ -35,6 +35,7 @@ type Topic struct {
 	Order     int       `orm:"index"`
 	Created   time.Time `orm:"auto_now_add"`
 	Updated   time.Time `orm:"auto_now;index"`
+	Category  *Category `orm:"rel(fk)"`
 }
 
 func (m *Topic) Insert() error {
@@ -84,7 +85,7 @@ func (m *Topic) Link() string {
 }
 
 func Topics() orm.QuerySeter {
-	return orm.NewOrm().QueryTable("topic").OrderBy("-Id")
+	return orm.NewOrm().QueryTable("topic").OrderBy("Id")
 }
 
 // topic category
@@ -132,7 +133,7 @@ func (m *Category) Link() string {
 }
 
 func Categories() orm.QuerySeter {
-	return orm.NewOrm().QueryTable("category").OrderBy("-Id")
+	return orm.NewOrm().QueryTable("category").OrderBy("Id")
 }
 
 // user follow topics

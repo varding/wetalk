@@ -37,15 +37,13 @@ func (this *BaseAdminRouter) NestPrepare() {
 	// if user isn't admin, then logout user
 	if !this.User.IsAdmin {
 		auth.LogoutUser(this.Ctx)
-
-		// write flash message
+		// write flash message, use .flash.NotPermit
 		this.FlashWrite("NotPermit", "true")
-
 		this.Redirect("/login", 302)
 		return
 	}
 
-	// current in admin page
+	// it's admin and current in admin page
 	this.Data["IsAdminPage"] = true
 
 	if app, ok := this.AppController.(ModelPreparer); ok {

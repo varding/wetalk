@@ -98,14 +98,13 @@ func main() {
 	// Register routers.
 	posts := new(post.PostListRouter)
 	beego.Router("/", posts, "get:Home")
-	beego.Router("/:slug(recent|best|cold|favs|follow)", posts, "get:Navs")
 	beego.Router("/category/:slug", posts, "get:Category")
 	beego.Router("/topic/:slug", posts, "get:Topic;post:TopicSubmit")
 
 	postR := new(post.PostRouter)
-	beego.Router("/new", postR, "get:New;post:NewSubmit")
-	beego.Router("/post/:post([0-9]+)", postR, "get:Single;post:SingleSubmit")
-	beego.Router("/post/:post([0-9]+)/edit", postR, "get:Edit;post:EditSubmit")
+	beego.Router("/new", postR, "get:NewPost;post:NewPostSubmit")
+	beego.Router("/post/:post([0-9]+)", postR, "get:SinglePost;post:SinglePostCommentSubmit")
+	beego.Router("/post/:post([0-9]+)/edit", postR, "get:EditPost;post:EditPostSubmit")
 
 	noticeRouter := new(post.NoticeRouter)
 	beego.Router("/notification", noticeRouter, "get:Get")
@@ -131,8 +130,8 @@ func main() {
 	beego.InsertFilter("/login/*/access", beego.BeforeRouter, auth.OAuthAccess)
 	beego.InsertFilter("/login/*", beego.BeforeRouter, auth.OAuthRedirect)
 
-	socialR := new(auth.SocialAuthRouter)
-	beego.Router("/register/connect", socialR, "get:Connect;post:ConnectPost")
+	//socialR := new(auth.SocialAuthRouter)
+	//beego.Router("/register/connect", socialR, "get:Connect;post:ConnectPost")
 
 	register := new(auth.RegisterRouter)
 	beego.Router("/register", register, "get:Get;post:Register")

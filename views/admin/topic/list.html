@@ -35,6 +35,7 @@
                                 <th>{{i18n .Lang "model.topic_order"}}</th>
                                 <th>{{i18n .Lang "model.created"}}</th>
                                 <th>{{i18n .Lang "model.updated"}}</th>
+                                <th>{{i18n .Lang "model.category"}}</th>
                         </thead>
                         <tbody>
                             {{range $topic := .Objects}}
@@ -45,6 +46,7 @@
                                 <td>{{$topic.Order}}</td>
                                 <td>{{$topic.Created|datetime}}</td>
                                 <td>{{$topic.Updated|datetime}}</td>
+                                <td>{{$topic.Category.Name}}</td>
                             </tr>
                             {{end}}
                         </tbody>

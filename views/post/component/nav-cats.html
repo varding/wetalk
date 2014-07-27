@@ -1,3 +1,5 @@
+<span class="cat"><a {{if eq $.CategorySlug "home"}} class="active"{{end}} href="{{$.AppUrl}}"><i class="icon icon-home"></i></a></span>
+</a>
 {{range .Categories}}
-    <span class="cat"><a {{if $.CategorySlug}}{{if eq $.CategorySlug .Slug}} class="active"{{end}}{{end}} href="{{.Link}}">{{i18n $.Lang (print "category." .Name)}}</a></span>
+    <span class="cat"><a {{if eq $.CategorySlug .Slug}} class="active"{{end}} href="{{.Link}}">{{i18n $.Lang (print "category." .Name)}}</a></span>
 {{end}}

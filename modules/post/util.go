@@ -17,6 +17,7 @@ package post
 import (
 	"fmt"
 	"regexp"
+	"strings"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
@@ -79,5 +80,60 @@ func PostReplysCount(post *models.Post) {
 	}
 	if err != nil {
 		beego.Error("PostReplysCount ", err)
+	}
+}
+
+func FilterCommentMentions(fromUser *models.User, post *models.Post, comment *models.Comment) {
+	var toUser = post.User
+	var uri = fmt.Sprintf("post/%d", post.Id)
+	var lang = setting.DefaultLang
+	if fromUser.Id != toUser.Id {
+		var notification = models.Notification{
+			FromUser:     fromUser,
+			ToUser:       toUser,
+			Action:       setting.NOTICE_TYPE_COMMENT,
+			Title:        post.Title,
+			TargetId:     post.Id,
+			Uri:          uri,
+			Lang:         lang,
+			Floor:        comment.Floor,
+			Content:      comment.Message,
+			ContentCache: comment.MessageCache,
+			Status:       setting.NOTICE_UNREAD,
+		}
+		if err := notification.Insert(); err == nil {
+			//pass
+		}
+	}
+
+	//check comment @
+	var pattern = "[ ]*@[a-zA-Z0-9]+[ ]*"
+	r := regexp.MustCompile(pattern)
+	userNames := r.FindAllString(comment.Message, -1)
+	for _, userName := range userNames {
+		bUserName := strings.TrimPrefix(strings.TrimSpace(userName), "@")
+		user := &models.User{
+			UserName: bUserName,
+		}
+		if err := user.Read("UserName"); err == nil {
+			if user.Id != 0 && user.Id != post.User.Id {
+				notification := models.Notification{
+					FromUser:     fromUser,
+					ToUser:       user,
+					Action:       setting.NOTICE_TYPE_COMMENT,
+					Title:        post.Title,
+					TargetId:     post.Id,
+					Uri:          uri,
+					Lang:         lang,
+					Floor:        comment.Floor,
+					Content:      comment.Message,
+					ContentCache: comment.MessageCache,
+					Status:       setting.NOTICE_UNREAD,
+				}
+				if err := notification.Insert(); err == nil {
+					//pass
+				}
+			}
+		}
 	}
 }

@@ -24,14 +24,13 @@ import (
 )
 
 type PostForm struct {
-	Lang       int               `form:"type(select);attr(rel,select2)"`
-	Category   int               `form:"type(select);attr(rel,select2)" valid:"Required"`
-	Topic      int               `form:"type(select);attr(rel,select2)" valid:"Required"`
-	Title      string            `form:"attr(autocomplete,off)" valid:"Required;MinSize(5);MaxSize(60)"`
-	Content    string            `form:"type(textarea)" valid:"Required;MinSize(10)"`
-	Categories []models.Category `form:"-"`
-	Topics     []models.Topic    `form:"-"`
-	Locale     i18n.Locale       `form:"-"`
+	Lang     int            `form:"type(select);attr(rel,select2)"`
+	Topic    int            `form:"type(select);attr(rel,select2)" valid:"Required"`
+	Title    string         `form:"attr(autocomplete,off)" valid:"Required;MinSize(5);MaxSize(60)"`
+	Content  string         `form:"type(textarea)" valid:"Required;MinSize(10)"`
+	Category int            `form:"-"`
+	Topics   []models.Topic `form:"-"`
+	Locale   i18n.Locale    `form:"-"`
 }
 
 func (form *PostForm) LangSelectData() [][]string {
@@ -39,14 +38,6 @@ func (form *PostForm) LangSelectData() [][]string {
 	data := make([][]string, 0, len(langs))
 	for i, lang := range langs {
 		data = append(data, []string{lang, utils.ToStr(i)})
-	}
-	return data
-}
-
-func (form *PostForm) CategorySelectData() [][]string {
-	data := make([][]string, 0, len(form.Categories))
-	for _, cat := range form.Categories {
-		data = append(data, []string{"category." + cat.Name, utils.ToStr(cat.Id)})
 	}
 	return data
 }
@@ -69,17 +60,6 @@ func (form *PostForm) Valid(v *validation.Validation) {
 
 	if !valid {
 		v.SetError("Topic", "error")
-	}
-
-	valid = false
-	for _, cat := range form.Categories {
-		if cat.Id == form.Category {
-			valid = true
-		}
-	}
-
-	if !valid {
-		v.SetError("Category", "error")
 	}
 
 	if len(i18n.GetLangByIndex(form.Lang)) == 0 {

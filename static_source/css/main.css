@@ -1,32 +1,42 @@
 
 /* nav-cats */
-.nav-cats ,.nav-topics {
+.nav-cats   {
   padding: 6px 10px;
 }
 
-.nav-cats .cat, .nav-topics .topic {
+.nav-cats .cat {
   display: inline-block;
 }
 
-.nav-cats .cat a, .nav-topics .topic a {
+.nav-cats .cat a {
   display: block;
   padding: 3px 8px;
   margin: 1px 0;
   border-radius: 3px;
 }
 
-.nav-cats .cat a:hover, .nav-topics .topic a:hover {
+.nav-cats .cat a:hover {
   text-decoration: none;
   background-color: #ddd;
 }
 
-.nav-cats .cat a.active, .nav-topics .topic a.active {
+.nav-cats .cat a.active {
   color: #fff;
   background-color: #444;
 }
 
-.breadcrumb.nav-cats, .breadcrumb.nav-topics {
-  padding: 5px 10px;
+/* nav-topics */
+.nav-topics{
+  padding: 6px 10px;
+}
+
+.nav-topics .topic a {
+  font-size: 13px;
+  padding: 3px 3px;
+}
+
+.nav-topics .topic a:hover {
+  text-decoration: underline;
 }
 
 /* post-list */

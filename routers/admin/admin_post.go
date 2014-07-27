@@ -40,7 +40,6 @@ func (this *PostAdminRouter) ObjectQs() orm.QuerySeter {
 
 func (this *PostAdminRouter) GetForm(create bool) post.PostAdminForm {
 	form := post.PostAdminForm{Create: create}
-	post.ListCategories(&form.Categories)
 	post.ListTopics(&form.Topics)
 	return form
 }
