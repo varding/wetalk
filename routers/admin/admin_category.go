@@ -115,13 +115,20 @@ func (this *CategoryAdminRouter) Delete() {
 	if this.FormOnceNotMatch() {
 		return
 	}
-
-	// delete object
-	if err := this.object.Delete(); err == nil {
-		this.FlashRedirect("/admin/category", 302, "DeleteSuccess")
+	// check whether there are topics under the category
+	qs := models.Topics().Filter("Category__Id", this.object.Id)
+	cnt, _ := qs.Count()
+	if cnt > 0 {
+		this.FlashRedirect("/admin/category", 302, "DeleteNotAllowed")
 		return
 	} else {
-		beego.Error(err)
-		this.Data["Error"] = err
+		// delete object
+		if err := this.object.Delete(); err == nil {
+			this.FlashRedirect("/admin/category", 302, "DeleteSuccess")
+			return
+		} else {
+			beego.Error(err)
+			this.Data["Error"] = err
+		}
 	}
 }

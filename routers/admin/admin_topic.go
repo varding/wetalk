@@ -108,6 +108,7 @@ func (this *TopicAdminRouter) Update() {
 
 // view for confirm delete object
 func (this *TopicAdminRouter) Confirm() {
+
 }
 
 // view for delete object
@@ -115,13 +116,20 @@ func (this *TopicAdminRouter) Delete() {
 	if this.FormOnceNotMatch() {
 		return
 	}
-
-	// delete object
-	if err := this.object.Delete(); err == nil {
-		this.FlashRedirect("/admin/topic", 302, "DeleteSuccess")
+	//check whether there are posts under this topic
+	qs := models.Posts().Filter("Topic__id", this.object.Id)
+	cnt, _ := qs.Count()
+	if cnt > 0 {
+		this.FlashRedirect("/admin/topic", 302, "DeleteNotAllowed")
 		return
 	} else {
-		beego.Error(err)
-		this.Data["Error"] = err
+		// delete object
+		if err := this.object.Delete(); err == nil {
+			this.FlashRedirect("/admin/topic", 302, "DeleteSuccess")
+			return
+		} else {
+			beego.Error(err)
+			this.Data["Error"] = err
+		}
 	}
 }
