@@ -45,36 +45,24 @@ func (this *PostListRouter) setTopicsOfCategory(topics *[]models.Topic, category
 func (this *PostListRouter) Home() {
 	this.Data["IsHomePage"] = true
 	this.TplNames = "post/home.html"
-	//get category from cookie
-	catSlug := this.Ctx.GetCookie("category_slug")
-	//go to the last category page specified by cookie id category_slug
-	wakenFromHistory := this.GetSession("waken_from_history")
-	if wakenFromHistory == nil {
-		this.SetSession("waken_from_history", true)
-		//get the category
-		cat := models.Category{Slug: catSlug}
-		if err := cat.Read("Slug"); err == nil {
-			//redirect to the category page
-			this.Redirect(cat.Link(), 302)
-		} else {
-			this.Redirect("/", 302)
-		}
-	} else {
-		//get posts by updated datetime desc order
-		var posts []models.Post
-		qs := models.Posts()
-		cnt, _ := models.CountObjects(qs)
-		pager := this.SetPaginator(setting.PostCountPerPage, cnt)
-		qs = qs.OrderBy("-Updated").Limit(setting.PostCountPerPage, pager.Offset()).RelatedSel()
 
-		models.ListObjects(qs, &posts)
-		this.Data["Posts"] = posts
+	//get posts by updated datetime desc order
+	var posts []models.Post
+	qs := models.Posts()
+	cnt, _ := models.CountObjects(qs)
+	pager := this.SetPaginator(setting.PostCountPerPage, cnt)
+	qs = qs.OrderBy("-Updated").Limit(setting.PostCountPerPage, pager.Offset()).RelatedSel()
 
-		//top nav bar data
-		var cats []models.Category
-		this.setCategories(&cats)
-		this.Data["CategorySlug"] = "home"
-	}
+	models.ListObjects(qs, &posts)
+	this.Data["Posts"] = posts
+
+	//top nav bar data
+	var cats []models.Category
+	this.setCategories(&cats)
+	this.Data["CategorySlug"] = "home"
+
+	//set cookie
+	this.Ctx.SetCookie("category_slug", "home", 1<<31-1, "/")
 }
 
 //Get the posts by category
