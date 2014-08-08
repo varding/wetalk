@@ -198,6 +198,8 @@ func (this *PostRouter) NewPost() {
 		form.Topic = topic.Id
 		form.Category = topic.Category.Id
 		this.Data["Topic"] = &topic
+	} else {
+		this.Redirect(setting.AppUrl, 302)
 	}
 
 	post.ListTopics(&form.Topics)
