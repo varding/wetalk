@@ -76,7 +76,9 @@ func PostReplysCount(post *models.Post) {
 	cnt, err := post.Comments().Count()
 	if err == nil {
 		post.Replys = int(cnt)
-		err = post.Update("Replys")
+		//disable post editable
+		post.CanEdit = false
+		err = post.Update("Replys", "CanEdit")
 	}
 	if err != nil {
 		beego.Error("PostReplysCount ", err)

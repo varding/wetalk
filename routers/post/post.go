@@ -346,6 +346,9 @@ func (this *PostRouter) EditPost() {
 		return
 	}
 
+	if !postMd.CanEdit {
+		this.Redirect(postMd.Link(), 302)
+	}
 	form := post.PostForm{}
 	form.SetFromPost(&postMd)
 	post.ListTopics(&form.Topics)
@@ -363,6 +366,10 @@ func (this *PostRouter) EditPostSubmit() {
 	var postMd models.Post
 	if this.loadPost(&postMd, &this.User) {
 		return
+	}
+
+	if !postMd.CanEdit {
+		this.FlashRedirect(postMd.Path(), 302, "CanNotEditPost")
 	}
 
 	form := post.PostForm{}

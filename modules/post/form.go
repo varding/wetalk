@@ -74,6 +74,7 @@ func (form *PostForm) SavePost(post *models.Post, user *models.User) error {
 	post.User = user
 	post.LastReply = user
 	post.LastAuthor = user
+	post.CanEdit = true
 	post.ContentCache = utils.RenderMarkdown(form.Content)
 
 	// mentioned follow users

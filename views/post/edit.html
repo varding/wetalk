@@ -12,18 +12,12 @@
                 <form id="post-new" method="POST" action="{{.Post.Link}}/edit">
                     {{.xsrf_html}}{{.once_html}}
 
-                    <div class="form-group">
-                        {{with .PostFormSets.Fields.Category}}
-                            <div class="post-categories{{if .Error}} has-error{{end}}">
-                                {{call .Field}}
-                            </div>
-                        {{end}}
+                    <div class="form-group" style="display:none;">
                         {{with .PostFormSets.Fields.Topic}}
                             <div class="post-topics{{if .Error}} has-error{{end}}">
                                 {{call .Field}}
                             </div>
                         {{end}}
-                        <span class="clearfix"></span>
                     </div>
 
                     {{with .PostFormSets.Fields.Title}}

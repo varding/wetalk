@@ -24,6 +24,11 @@
                         <a  class="tag" href="{{.Post.Category.Link}}">{{i18n .Lang (print "category." .Post.Category.Name)}}</a> • <a  class="tag" href="{{.Post.Topic.Link}}">{{.Post.Topic.Name}}</a> • {{i18n .Lang "post.post_author"}} <a  href="{{.Post.User.Link}}">{{.Post.User.NickName}}</a> • <span class="time">{{timesince .Lang .Post.Created}}</span>{{if .Post.Replys}}{{if .Post.LastReply}} • <span class="last-reply">{{i18n .Lang "post.last_reply"}} <a href="{{.Post.LastReply.Link}}">{{.Post.LastReply.NickName}}</a></span>{{end}}{{end}}
                     </div>
                 </div>
+                {{if .flash.CanNotEditPost}}
+                    <div class="alert alert-warning" style="padding:5px;border-radius:0;">
+                        {{i18n .Lang "post.post_edit_locked"}}
+                    </div>
+                {{end}}
                 <div class="cell last slim">
                     {{if ne (datetime .Post.Updated) (datetime .Post.Created)}}
                         <p class="post-meta pull-right">
@@ -33,7 +38,9 @@
                     {{if .IsLogin}}
                         <p>
                         {{if eq .Post.User.Id .User.Id}}
+                            {{if .Post.CanEdit}}
                             <a class="color-link" href="{{.Post.Link}}/edit">{{i18n .Lang "post.post_edit"}}</a>
+                            {{end}}
                         {{end}}
                         {{if .User.IsAdmin}}
                             <a class="color-link" href="javascript:void(0)" rel="toggle-post-best">{{if .Post.IsBest}}{{i18n .Lang "post.remove_best"}}{{else}}{{i18n .Lang "post.set_best"}}{{end}}</a>

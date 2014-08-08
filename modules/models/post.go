@@ -40,6 +40,7 @@ type Post struct {
 	Topic        *Topic    `orm:"rel(fk)"`
 	Lang         int       `orm:"index"`
 	IsBest       bool      `orm:"index"`
+	CanEdit      bool      `orm:"index"`
 	Category     *Category `orm:"rel(fk)"`
 	Created      time.Time `orm:"auto_now_add"`
 	Updated      time.Time `orm:"auto_now;index"`
@@ -79,6 +80,10 @@ func (m *Post) String() string {
 
 func (m *Post) Link() string {
 	return fmt.Sprintf("%spost/%d", setting.AppUrl, m.Id)
+}
+
+func (m *Post) Path() string {
+	return fmt.Sprintf("/post/%d", m.Id)
 }
 
 func (m *Post) GetContentCache() string {
