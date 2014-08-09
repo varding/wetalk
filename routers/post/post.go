@@ -91,24 +91,30 @@ func (this *PostListRouter) setMostReplysPostsOfTopic(posts *[]models.Post, topi
 
 //Get sidebar bulletin information
 func (this *PostListRouter) setSidebarBuilletinInfo() {
+	var bulletins []models.Bulletin
+	qs := models.Bulletins().OrderBy("Created")
+	models.ListObjects(qs, &bulletins)
+
 	var friendLinks []models.Bulletin
-	qs := models.Bulletins().Filter("Type", setting.BULLETIN_FRIEND_LINK).OrderBy("Created")
-	models.ListObjects(qs, &friendLinks)
-	this.Data["FriendLinks"] = friendLinks
-
 	var newComers []models.Bulletin
-	qs = models.Bulletins().Filter("Type", setting.BULLETIN_NEW_COMER).OrderBy("Created")
-	models.ListObjects(qs, &newComers)
-	this.Data["NewComers"] = newComers
-
 	var mobileApps []models.Bulletin
-	qs = models.Bulletins().Filter("Type", setting.BULLETIN_MOBILE_APP).OrderBy("Created")
-	models.ListObjects(qs, &mobileApps)
-	this.Data["MobileApps"] = mobileApps
-
 	var openSources []models.Bulletin
-	qs = models.Bulletins().Filter("Type", setting.BULLETIN_OPEN_SOURCE).OrderBy("Created")
-	models.ListObjects(qs, &openSources)
+
+	for _, bulletin := range bulletins {
+		switch bulletin.Type {
+		case setting.BULLETIN_FRIEND_LINK:
+			friendLinks = append(friendLinks, bulletin)
+		case setting.BULLETIN_NEW_COMER:
+			newComers = append(newComers, bulletin)
+		case setting.BULLETIN_MOBILE_APP:
+			mobileApps = append(mobileApps, bulletin)
+		case setting.BULLETIN_OPEN_SOURCE:
+			openSources = append(openSources, bulletin)
+		}
+	}
+	this.Data["FriendLinks"] = friendLinks
+	this.Data["NewComers"] = newComers
+	this.Data["MobileApps"] = mobileApps
 	this.Data["OpenSources"] = openSources
 }
 
