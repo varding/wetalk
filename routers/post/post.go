@@ -41,6 +41,30 @@ func (this *PostListRouter) setTopicsOfCategory(topics *[]models.Topic, category
 	this.Data["TopicsOfCategory"] = *topics
 }
 
+//Get new best posts
+func (this *PostListRouter) setNewBestPosts(posts *[]models.Post) {
+	qs := models.Posts()
+	qs = qs.Filter("IsBest", true).OrderBy("-Created").Limit(10)
+	models.ListObjects(qs, posts)
+	this.Data["NewBestPosts"] = posts
+}
+
+//Get new best posts by category
+func (this *PostListRouter) setNewBestPostsOfCategory(posts *[]models.Post, cat *models.Category) {
+	qs := models.Posts()
+	qs = qs.Filter("IsBest", true).Filter("Category__id", cat.Id).OrderBy("-Created").Limit(10)
+	models.ListObjects(qs, posts)
+	this.Data["NewBestPosts"] = posts
+}
+
+//Get new best posts by topic
+func (this *PostListRouter) setNewBestPostsOfTopic(posts *[]models.Post, topic *models.Topic) {
+	qs := models.Posts()
+	qs = qs.Filter("IsBest", true).Filter("Topic__id", topic.Id).OrderBy("-Created").Limit(10)
+	models.ListObjects(qs, posts)
+	this.Data["NewBestPosts"] = posts
+}
+
 //Get the home page
 func (this *PostListRouter) Home() {
 	this.Data["IsHomePage"] = true
@@ -60,6 +84,9 @@ func (this *PostListRouter) Home() {
 	var cats []models.Category
 	this.setCategories(&cats)
 	this.Data["CategorySlug"] = "home"
+	//new best posts
+	var newBestPosts []models.Post
+	this.setNewBestPosts(&newBestPosts)
 
 	//set cookie
 	this.Ctx.SetCookie("category_slug", "home", 1<<31-1, "/")
@@ -97,6 +124,8 @@ func (this *PostListRouter) Category() {
 	var topics []models.Topic
 	this.setTopicsOfCategory(&topics, &cat)
 	this.Data["CategorySlug"] = cat.Slug
+	var newBestPosts []models.Post
+	this.setNewBestPostsOfCategory(&newBestPosts, &cat)
 }
 
 //Topic Home Page
@@ -137,6 +166,9 @@ func (this *PostListRouter) Topic() {
 	}
 	this.Data["HasFavorite"] = HasFavorite
 
+	//new best post
+	var newBestPosts []models.Post
+	this.setNewBestPostsOfTopic(&newBestPosts, &topic)
 }
 
 // Add this topic into favorite list
