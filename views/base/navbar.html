@@ -12,9 +12,9 @@
             </a>
         </div>
         {{if .SearchEnabled}}
-        <form id="navbar-search" class="navbar-form navbar-left {{if or .NativeSearch .SphinxEnabled}}{{else}}google{{end}}" role="search" action="{{.AppUrl}}search">
+        <form id="navbar-search" class="navbar-form navbar-left" role="search" action="{{.AppUrl}}search">
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="{{i18n .Lang "search"}}" name="q" {{if or .NativeSearch .SphinxEnabled}}value="{{.Q}}"{{end}}>
+                <input class="form-control" type="text" placeholder="{{i18n .Lang "search"}}" name="q" id="search-box">
             </div>
         </form>
         {{end}}

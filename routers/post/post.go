@@ -92,22 +92,22 @@ func (this *PostListRouter) setMostReplysPostsOfTopic(posts *[]models.Post, topi
 //Get sidebar bulletin information
 func (this *PostListRouter) setSidebarBuilletinInfo() {
 	var friendLinks []models.Bulletin
-	qs := models.Bulletins().Filter("Type", models.BULLETIN_FRIEND_LINK).OrderBy("Created")
+	qs := models.Bulletins().Filter("Type", setting.BULLETIN_FRIEND_LINK).OrderBy("Created")
 	models.ListObjects(qs, &friendLinks)
 	this.Data["FriendLinks"] = friendLinks
 
 	var newComers []models.Bulletin
-	qs = models.Bulletins().Filter("Type", models.BULLETIN_NEW_COMER).OrderBy("Created")
+	qs = models.Bulletins().Filter("Type", setting.BULLETIN_NEW_COMER).OrderBy("Created")
 	models.ListObjects(qs, &newComers)
 	this.Data["NewComers"] = newComers
 
 	var mobileApps []models.Bulletin
-	qs = models.Bulletins().Filter("Type", models.BULLETIN_MOBILE_APP).OrderBy("Created")
+	qs = models.Bulletins().Filter("Type", setting.BULLETIN_MOBILE_APP).OrderBy("Created")
 	models.ListObjects(qs, &mobileApps)
 	this.Data["MobileApps"] = mobileApps
 
 	var openSources []models.Bulletin
-	qs = models.Bulletins().Filter("Type", models.BULLETIN_OPEN_SOURCE).OrderBy("Created")
+	qs = models.Bulletins().Filter("Type", setting.BULLETIN_OPEN_SOURCE).OrderBy("Created")
 	models.ListObjects(qs, &openSources)
 	this.Data["OpenSources"] = openSources
 }

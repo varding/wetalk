@@ -22,7 +22,6 @@ import (
 	"github.com/beego/social-auth"
 
 	"github.com/astaxie/beego/orm"
-	"github.com/beego/wetalk/modules/utils"
 	"github.com/beego/wetalk/routers/admin"
 	"github.com/beego/wetalk/routers/api"
 	"github.com/beego/wetalk/routers/attachment"
@@ -52,11 +51,6 @@ func initialize() {
 		beego.SetLevel(beego.LevelTrace)
 	}
 	beego.SetLogFuncCall(true)
-
-	//check local search function
-	if err := utils.InitSphinxPools(); err != nil {
-		beego.Error(fmt.Sprint("sphinx init pool", err))
-	}
 
 	setting.SocialAuth = social.NewSocial("/login/", auth.SocialAuther)
 	setting.SocialAuth.ConnectSuccessURL = "/settings/profile"
@@ -109,9 +103,9 @@ func main() {
 	noticeRouter := new(post.NoticeRouter)
 	beego.Router("/notification", noticeRouter, "get:Get")
 
-	if setting.NativeSearch || setting.SphinxEnabled {
+	if setting.SearchEnabled {
 		searchR := new(post.SearchRouter)
-		beego.Router("/search", searchR, "get:Get")
+		beego.Router("/q", searchR, "get:Get")
 	}
 
 	user := new(auth.UserRouter)
@@ -175,6 +169,7 @@ func main() {
 		"topic":    new(admin.TopicAdminRouter),
 		"category": new(admin.CategoryAdminRouter),
 		"page":     new(admin.PageAdminRouter),
+		"bulletin": new(admin.BulletinAdminRouter),
 	}
 	for name, router := range routes {
 		beego.Router(fmt.Sprintf("/admin/:model(%s)", name), router, "get:List")

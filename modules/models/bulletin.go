@@ -5,13 +5,6 @@ import (
 	"time"
 )
 
-const (
-	BULLETIN_FRIEND_LINK = iota
-	BULLETIN_NEW_COMER
-	BULLETIN_OPEN_SOURCE
-	BULLETIN_MOBILE_APP
-)
-
 //Bulletin
 type Bulletin struct {
 	Id      int

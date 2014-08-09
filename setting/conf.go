@@ -74,13 +74,6 @@ var (
 
 	// search
 	SearchEnabled bool
-	NativeSearch  bool
-
-	// sphinx search setting
-	SphinxEnabled bool
-	SphinxHost    string
-	SphinxIndex   string
-	SphinxMaxConn int
 
 	// mail setting
 	MailUser     string
@@ -119,6 +112,13 @@ var (
 const (
 	LangEnUS = iota
 	LangZhCN
+)
+
+const (
+	BULLETIN_FRIEND_LINK = iota
+	BULLETIN_NEW_COMER
+	BULLETIN_OPEN_SOURCE
+	BULLETIN_MOBILE_APP
 )
 
 const (
@@ -237,13 +237,6 @@ func LoadConfig() *goconfig.ConfigFile {
 
 	reloadConfig()
 
-	if SphinxEnabled {
-		// for search config
-		SphinxHost = Cfg.MustValue("search", "sphinx_host", "127.0.0.1:9306")
-		SphinxMaxConn = Cfg.MustInt("search", "sphinx_max_conn", 5)
-		orm.RegisterDriver("sphinx", orm.DR_MySQL)
-	}
-
 	social.DefaultAppUrl = AppUrl
 
 	// OAuth
@@ -337,15 +330,7 @@ func reloadConfig() {
 	orm.Debug = Cfg.MustBool("orm", "debug_log")
 
 	// search setting
-	SphinxIndex = Cfg.MustValue("search", "sphinx_index", "wetalk, wetalk_delta")
-
 	SearchEnabled = Cfg.MustBool("search", "enabled")
-	SphinxEnabled = Cfg.MustBool("search", "sphinx_enabled")
-	NativeSearch = Cfg.MustBool("search", "native_search")
-	if !SearchEnabled {
-		SphinxEnabled = false
-		NativeSearch = false
-	}
 
 	// OAuth
 	GithubClientId = Cfg.MustValue("oauth", "github_client_id", "your_client_id")

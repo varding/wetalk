@@ -127,6 +127,7 @@ func init() {
 	beego.AddFuncMap("sum", sum)
 	beego.AddFuncMap("loginto", loginto)
 	beego.AddFuncMap("isnotificationread", isnotificationread)
+	beego.AddFuncMap("getbulletintype", getbulletintype)
 }
 
 func RenderTemplate(TplNames string, Data map[interface{}]interface{}) string {
@@ -152,4 +153,19 @@ func isnotificationread(status int) bool {
 		result = true
 	}
 	return result
+}
+
+func getbulletintype(lang string, t int) string {
+	var typeStr string
+	switch t {
+	case setting.BULLETIN_FRIEND_LINK:
+		typeStr = i18n.Tr(lang, "model.bulletin_friend_link")
+	case setting.BULLETIN_MOBILE_APP:
+		typeStr = i18n.Tr(lang, "model.bulletin_mobile_app")
+	case setting.BULLETIN_NEW_COMER:
+		typeStr = i18n.Tr(lang, "model.bulletin_new_comer")
+	case setting.BULLETIN_OPEN_SOURCE:
+		typeStr = i18n.Tr(lang, "model.bulletin_open_source")
+	}
+	return typeStr
 }
