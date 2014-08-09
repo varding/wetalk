@@ -14,9 +14,24 @@
         {{if .SearchEnabled}}
         <form id="navbar-search" class="navbar-form navbar-left" role="search" action="{{.AppUrl}}search">
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="{{i18n .Lang "search"}}" name="q" id="search-box">
+                <input class="form-control search-box" type="text" placeholder="{{i18n .Lang "search"}}" name="q" id="st-search-input">
             </div>
         </form>
+        <script type="text/javascript">
+        var Swiftype = window.Swiftype || {};
+          (function() {
+            Swiftype.key = 'bSX8Xyi7KXStQuezxXf5';
+            Swiftype.renderStyle = 'new_page';
+            /** CONFIGURATION VARIABLE: YOU MUST EDIT BEFORE ADDING TO YOUR TEMPLATE. **/
+            Swiftype.resultPageURL = '{{.AppUrl}}q';
+
+            /** DO NOT EDIT BELOW THIS LINE **/
+            var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+            script.src = "//s.swiftypecdn.com/embed.js";
+            var entry = document.getElementsByTagName('script')[0];
+            entry.parentNode.insertBefore(script, entry);
+          }());
+        </script>
         {{end}}
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right navbar-menu">

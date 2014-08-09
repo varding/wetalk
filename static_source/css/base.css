@@ -317,7 +317,7 @@ a.color-link:hover,
   margin-bottom: 5px;
 }
 
-#search-box{
+.search-box{
   font-size: 12px;
   padding: 9px 9px 7px 27px;
   height: 30px;
@@ -332,4 +332,13 @@ a.color-link:hover,
   border-radius: 15px;
   outline: none;
   background: #fcfcfc url(/static/img/search.png) no-repeat 7px 7px;
+}
+
+#st-results-container{
+  padding: 12px;
+}
+
+.st-search-result-link{
+  font-size: 15px;
+  color: #1a0dab;
 }
