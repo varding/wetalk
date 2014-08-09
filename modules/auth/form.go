@@ -27,7 +27,7 @@ import (
 
 // Register form
 type RegisterForm struct {
-	UserName   string      `valid:"Required;AlphaDash;MinSize(5);MaxSize(30)"`
+	UserName   string      `valid:"Required;AlphaDash;MinSize(3);MaxSize(30)"`
 	Email      string      `valid:"Required;Email;MaxSize(80)"`
 	Password   string      `form:"type(password)" valid:"Required;MinSize(4);MaxSize(30)"`
 	PasswordRe string      `form:"type(password)" valid:"Required;MinSize(4);MaxSize(30)"`
@@ -71,7 +71,7 @@ func (form *RegisterForm) Labels() map[string]string {
 
 func (form *RegisterForm) Helps() map[string]string {
 	return map[string]string{
-		"UserName": form.Locale.Tr("valid.min_length_is", 5) + ", " + form.Locale.Tr("valid.only_contains", "a-z 0-9 - _"),
+		"UserName": form.Locale.Tr("valid.min_length_is", 3) + ", " + form.Locale.Tr("valid.only_contains", "a-z 0-9 - _"),
 		"Captcha":  "auth.captcha_click_refresh",
 	}
 }
