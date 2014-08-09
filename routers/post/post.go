@@ -89,6 +89,29 @@ func (this *PostListRouter) setMostReplysPostsOfTopic(posts *[]models.Post, topi
 	this.Data["MostReplysPosts"] = posts
 }
 
+//Get sidebar bulletin information
+func (this *PostListRouter) setSidebarBuilletinInfo() {
+	var friendLinks []models.Bulletin
+	qs := models.Bulletins().Filter("Type", models.BULLETIN_FRIEND_LINK).OrderBy("Created")
+	models.ListObjects(qs, &friendLinks)
+	this.Data["FriendLinks"] = friendLinks
+
+	var newComers []models.Bulletin
+	qs = models.Bulletins().Filter("Type", models.BULLETIN_NEW_COMER).OrderBy("Created")
+	models.ListObjects(qs, &newComers)
+	this.Data["NewComers"] = newComers
+
+	var mobileApps []models.Bulletin
+	qs = models.Bulletins().Filter("Type", models.BULLETIN_MOBILE_APP).OrderBy("Created")
+	models.ListObjects(qs, &mobileApps)
+	this.Data["MobileApps"] = mobileApps
+
+	var openSources []models.Bulletin
+	qs = models.Bulletins().Filter("Type", models.BULLETIN_OPEN_SOURCE).OrderBy("Created")
+	models.ListObjects(qs, &openSources)
+	this.Data["OpenSources"] = openSources
+}
+
 //Get the home page
 func (this *PostListRouter) Home() {
 	this.Data["IsHomePage"] = true
@@ -114,6 +137,7 @@ func (this *PostListRouter) Home() {
 	//most replys posts
 	var mostReplysPosts []models.Post
 	this.setMostReplysPosts(&mostReplysPosts)
+	this.setSidebarBuilletinInfo()
 
 	//set cookie
 	this.Ctx.SetCookie("category_slug", "home", 1<<31-1, "/")
@@ -156,6 +180,7 @@ func (this *PostListRouter) Category() {
 	//most replys posts
 	var mostReplysPosts []models.Post
 	this.setMostReplysPostsOfCategory(&mostReplysPosts, &cat)
+	this.setSidebarBuilletinInfo()
 }
 
 //Topic Home Page
@@ -202,6 +227,7 @@ func (this *PostListRouter) Topic() {
 	//most replys posts
 	var mostReplysPosts []models.Post
 	this.setMostReplysPostsOfTopic(&mostReplysPosts, &topic)
+	this.setSidebarBuilletinInfo()
 }
 
 // Add this topic into favorite list
