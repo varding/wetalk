@@ -65,6 +65,30 @@ func (this *PostListRouter) setNewBestPostsOfTopic(posts *[]models.Post, topic *
 	this.Data["NewBestPosts"] = posts
 }
 
+//Get most replys posts
+func (this *PostListRouter) setMostReplysPosts(posts *[]models.Post) {
+	qs := models.Posts()
+	qs = qs.Filter("Replys__gt", 0).OrderBy("-Created", "-Replys").Limit(10)
+	models.ListObjects(qs, posts)
+	this.Data["MostReplysPosts"] = posts
+}
+
+//Get most replys posts of category
+func (this *PostListRouter) setMostReplysPostsOfCategory(posts *[]models.Post, cat *models.Category) {
+	qs := models.Posts()
+	qs = qs.Filter("Category__id", cat.Id).Filter("Replys__gt", 0).OrderBy("-Created", "-Replys").Limit(10)
+	models.ListObjects(qs, posts)
+	this.Data["MostReplysPosts"] = posts
+}
+
+//Get most replys post of topic
+func (this *PostListRouter) setMostReplysPostsOfTopic(posts *[]models.Post, topic *models.Topic) {
+	qs := models.Posts()
+	qs = qs.Filter("Topic__id", topic.Id).Filter("Replys__gt", 0).OrderBy("-Created", "-Replys").Limit(10)
+	models.ListObjects(qs, posts)
+	this.Data["MostReplysPosts"] = posts
+}
+
 //Get the home page
 func (this *PostListRouter) Home() {
 	this.Data["IsHomePage"] = true
@@ -87,6 +111,9 @@ func (this *PostListRouter) Home() {
 	//new best posts
 	var newBestPosts []models.Post
 	this.setNewBestPosts(&newBestPosts)
+	//most replys posts
+	var mostReplysPosts []models.Post
+	this.setMostReplysPosts(&mostReplysPosts)
 
 	//set cookie
 	this.Ctx.SetCookie("category_slug", "home", 1<<31-1, "/")
@@ -126,6 +153,9 @@ func (this *PostListRouter) Category() {
 	this.Data["CategorySlug"] = cat.Slug
 	var newBestPosts []models.Post
 	this.setNewBestPostsOfCategory(&newBestPosts, &cat)
+	//most replys posts
+	var mostReplysPosts []models.Post
+	this.setMostReplysPostsOfCategory(&mostReplysPosts, &cat)
 }
 
 //Topic Home Page
@@ -169,6 +199,9 @@ func (this *PostListRouter) Topic() {
 	//new best post
 	var newBestPosts []models.Post
 	this.setNewBestPostsOfTopic(&newBestPosts, &topic)
+	//most replys posts
+	var mostReplysPosts []models.Post
+	this.setMostReplysPostsOfTopic(&mostReplysPosts, &topic)
 }
 
 // Add this topic into favorite list
