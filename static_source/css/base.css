@@ -3,10 +3,7 @@ html, body {
 }
 
 body {
- 
-  background-image: url('http://golanghome-public.qiniudn.com/gobg.png');
-  background-attachment: fixed;
-  background-repeat: no-repeat;
+ background-color: #eee;
 }
 
 body,
