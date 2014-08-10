@@ -21,7 +21,7 @@
                          {{.Post.Title}}<i id="post-best-flag" class="icon-bookmark color-red" style="{{if not .Post.IsBest}}display:none;{{end}}"></i>
                     </h1>
                     <div class="post-meta">
-                        <a  class="tag" href="{{.Post.Category.Link}}">{{i18n .Lang (print "category." .Post.Category.Name)}}</a> • <a  class="tag" href="{{.Post.Topic.Link}}">{{.Post.Topic.Name}}</a> • {{i18n .Lang "post.post_author"}} <a  href="{{.Post.User.Link}}">{{.Post.User.NickName}}</a> • <span class="time">{{timesince .Lang .Post.Created}}</span>{{if .Post.Replys}}{{if .Post.LastReply}} • <span class="last-reply">{{i18n .Lang "post.last_reply"}} <a href="{{.Post.LastReply.Link}}">{{.Post.LastReply.NickName}}</a></span>{{end}}{{end}}
+                        <a  class="tag" href="{{.Post.Category.Link}}">{{i18n .Lang (print "category." .Post.Category.Name)}}</a> • <a  class="tag" href="{{.Post.Topic.Link}}">{{.Post.Topic.Name}}</a> • {{i18n .Lang "post.post_author"}} <a  href="{{.Post.User.Link}}">{{.Post.User.NickName}}</a> • <span class="time">{{timesince .Lang .Post.Created}}</span>{{if .Post.Replys}}{{if .Post.LastReply}} • <span class="last-reply">{{i18n .Lang "post.last_reply"}} <a href="{{.Post.LastReply.Link}}">{{.Post.LastReply.NickName}}</a></span> • <span class="time">{{timesince .Lang .Post.LastReplied}}</span>{{end}}{{end}}
                     </div>
                 </div>
                 {{if .flash.CanNotEditPost}}
