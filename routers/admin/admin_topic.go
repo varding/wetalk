@@ -41,7 +41,7 @@ func (this *TopicAdminRouter) ObjectQs() orm.QuerySeter {
 // view for list model data
 func (this *TopicAdminRouter) List() {
 	var topics []models.Topic
-	qs := models.Topics().RelatedSel()
+	qs := models.Topics().OrderBy("-Category__id").RelatedSel()
 	if err := this.SetObjects(qs, &topics); err != nil {
 		this.Data["Error"] = err
 		beego.Error(err)
