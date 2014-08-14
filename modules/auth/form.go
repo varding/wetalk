@@ -307,7 +307,7 @@ func (form *UserAvatarForm) SetFromUser(user *models.User) {
 type UserAdminForm struct {
 	Create      bool   `form:"-"`
 	Id          int    `form:"-"`
-	UserName    string `valid:"Required;AlphaDash;MinSize(5);MaxSize(30)"`
+	UserName    string `valid:"Required;AlphaDash;MinSize(3);MaxSize(30)"`
 	Email       string `valid:"Required;Email;MaxSize(100)"`
 	PublicEmail bool   ``
 	NickName    string `valid:"Required;MaxSize(30)"`
