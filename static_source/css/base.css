@@ -339,3 +339,7 @@ a.color-link:hover,
   font-size: 15px;
   color: #1a0dab;
 }
+
+.post-action-link{
+  padding: 3px 6px;
+}
