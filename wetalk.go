@@ -44,14 +44,14 @@ func initialize() {
 	//set logger
 	if setting.IsProMode {
 		beego.SetLogger("file", `{"filename":"logs/prod.log"}`)
-		beego.SetLevel(beego.LevelInfo)
+		beego.SetLevel(beego.LevelInformational)
 		beego.BeeLogger.DelLogger("console")
 	} else {
 		beego.SetLogger("file", `{"filename":"logs/dev.log"}`)
-		beego.SetLevel(beego.LevelTrace)
+		beego.SetLevel(beego.LevelDebug)
+		beego.BeeLogger.SetLogger("console", "")
 	}
 	beego.SetLogFuncCall(true)
-
 	setting.SocialAuth = social.NewSocial("/login/", auth.SocialAuther)
 	setting.SocialAuth.ConnectSuccessURL = "/settings/profile"
 	setting.SocialAuth.ConnectFailedURL = "/settings/profile"

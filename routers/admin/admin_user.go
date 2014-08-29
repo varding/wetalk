@@ -40,8 +40,18 @@ func (this *UserAdminRouter) ObjectQs() orm.QuerySeter {
 
 // view for list model data
 func (this *UserAdminRouter) List() {
+	var q = this.GetString("q")
 	var users []models.User
-	qs := models.Users()
+	var qs orm.QuerySeter
+	if q != "" {
+		cond := orm.NewCondition()
+		cond = cond.Or("Email", q)
+		cond = cond.Or("UserName", q)
+		qs = models.Users().SetCond(cond)
+	} else {
+		qs = models.Users()
+	}
+	this.Data["q"] = q
 	if err := this.SetObjects(qs, &users); err != nil {
 		this.Data["Error"] = err
 		beego.Error(err)
