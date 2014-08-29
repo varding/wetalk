@@ -141,6 +141,7 @@ func (form *ResetPwdForm) Valid(v *validation.Validation) {
 
 func (form *ResetPwdForm) Labels() map[string]string {
 	return map[string]string{
+		"Password":   "auth.type_newpassword",
 		"PasswordRe": "auth.retype_password",
 	}
 }
