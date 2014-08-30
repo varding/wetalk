@@ -105,7 +105,7 @@ func main() {
 
 	if setting.SearchEnabled {
 		searchR := new(post.SearchRouter)
-		beego.Router("/q", searchR, "get:Get")
+		beego.Router("/search", searchR, "get:Get")
 	}
 
 	user := new(auth.UserRouter)

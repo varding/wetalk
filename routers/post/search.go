@@ -15,6 +15,7 @@
 package post
 
 import (
+	"fmt"
 	"github.com/beego/wetalk/routers/base"
 )
 
@@ -23,5 +24,7 @@ type SearchRouter struct {
 }
 
 func (this *SearchRouter) Get() {
-	this.TplNames = "search/result.html"
+	site := "site:golanghome.com"
+	q := this.GetString("q")
+	this.Redirect(fmt.Sprintf("http://cn.bing.com/search?q=%s %s", site, q), 302)
 }
