@@ -21,6 +21,7 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right navbar-menu">
                 <li {{if .IsHomePage}}class="active"{{end}}><a href="{{.AppUrl}}">{{i18n .Lang "home"}}</a></li>
+                <li><a href="http://gopm.io" target="_blank">{{i18n .Lang "gopm"}}</a></li>
                 <!--<li><a href="{{.AppUrl}}column">{{i18n .Lang "column"}}</a></li>-->
                 {{if .IsLogin}}
                 <li {{if .IsUserHomePage}}class="active"{{end}}><a href="{{.User.Link}}">{{.User.NickName}}</a></li>
