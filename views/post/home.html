@@ -7,35 +7,41 @@
 {{end}}
 {{define "body"}}
 <div class="row">
-    <div id="content" class="col-md-8">
+    <div id="content" class="col-md-9">
         <div class="box">
-            <!-- Category list -->
-            <div class="cell nav-cats breadcrumb first">
-                {{template "post/component/nav-cats.html" .}}
+            <div class="box-heading">
+                <!-- Category list -->
+                <div class="nav-cats">
+                    {{template "post/component/nav-cats.html" .}}
+                </div>
+
+                {{if .TopicsOfCategory}}
+                <!-- Topics of Category -->
+                <div class="nav-topics">
+                    {{template "post/component/nav-topics.html" dict "Topics" .TopicsOfCategory}}
+                </div>
+                {{end}}
             </div>
-            {{if .TopicsOfCategory}}
-            <!-- Topics of Category -->
-            <div class="cell nav-topics breadcrumb">
-                {{template "post/component/nav-topics.html" dict "Topics" .TopicsOfCategory}}
-            </div>
-            {{end}}
             <!-- Post list -->
             {{if .paginator.Nums}}
+            <div class="box-body">
                 <div class="post-list">
                     {{template "post/component/posts.html" dict "root" . "Posts" .Posts}}
+                    <div class="post-pg">
+                        {{template "base/paginator_pn.html" .}}
+                    </div>
                 </div>
-                <div class="cell last">
-                    {{template "base/paginator_pn.html" .}}
-                </div>
+                
+            </div>
             {{else}}
-                <div class="cell last">
+                <div class="">
                     <div class="text-center">{{i18n .Lang "postnav.not_found_posts"}}</div>
                 </div>
             {{end}}
         </div>
 	</div>
 
-    <div id="sidebar" class="col-md-4">
+    <div id="sidebar" class="col-md-3">
         {{template "post/component/sidebar.html" .}}
     </div>
 

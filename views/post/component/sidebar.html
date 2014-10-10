@@ -1,62 +1,17 @@
-<div class="box">
-	
-	<div class="cell first slim">
-		{{if .IsLogin}}
-			<div class="user-info">
-			  <a href="{{.AppUrl}}user/{{.User.UserName}}" class="avatar"><img src="{{.User.AvatarLink48}}" ></a>
-			  &nbsp;
-			  <span style="font-size:15px;"><a href="{{.AppUrl}}user/{{.User.UserName}}">{{.User.NickName}}</a></span>
-			 </div>
-			 <div class="user-stats">
-			 	<table>
-			 		<tbody>
-			 			<tr>
-			 				<td>
-			 					<a href="{{.User.Link}}/following" class="color-link-hover">
-						            <strong>{{.User.Following}}</strong><br/> <span>{{i18n .Lang "user.following"}}</span>
-						        </a>
-			 				</td>
-			 				<td>
-			 					 <a href="{{.User.Link}}/followers" class="color-link-hover">
-						            <strong>{{.User.Followers}}</strong> <br/><span>{{i18n .Lang "user.followers"}}</span>
-						        </a>
-			 				</td>
-			 				<td>
-			 					 <a href="{{.User.Link}}/favorite/posts" class="color-link-hover">
-						            <strong>{{.User.FavPosts}}</strong> <br/><span>{{i18n .Lang "user.favorite"}}</span>
-						        </a>
-			 				</td>
-			 			</tr>
-			 		</tbody>
-			 	</table>
-        	</div>
-        	<div class="user-notice">
-        		{{if .UnreadNotificationCount}}
-        			<p><a href="{{.AppUrl}}notification"><strong>{{.UnreadNotificationCount}}&nbsp;{{i18n .Lang "notice.unread_notice_count"}}</strong></a></p>
-        		{{else}}
-        			<p><a href="{{.AppUrl}}notification">{{.UnreadNotificationCount}}&nbsp;{{i18n .Lang "notice.unread_notice_count"}}</a></p>
-        		{{end}}
-        	</div>
-		{{else}}
-		<div class="cell first" style="margin-bottom:10px;">
-			<p><strong>{{i18n .Lang "app_name"}}</strong></p>
-			<p style="color:#888;">{{i18n .Lang "app_intro"}}</p>
-		</div>
-		<p style="text-align:center;">
-			<a href="{{.AppUrl}}register" class="btn btn-info">{{i18n .Lang "auth.sign_register_now"}}</a>
+{{if .IsLogin}}
+	{{if ne $.CategorySlug "home"}}
+	<div class="box">
+		<p>
+			<a class="btn btn-primary btn-sm" href="{{.AppUrl}}new?category={{$.CategorySlug}}"><span class="glyphicon glyphicon-plus"></span> {{i18n .Lang "post.post_new"}}</a>
 		</p>
-		<p style="text-align:center;">
-			{{i18n .Lang "auth.sign_in_plz"}}&nbsp;
-			<a href="{{.AppUrl}}login" style="color:#666;"><strong>{{i18n .Lang "auth.sign_in"}}</strong></a>
-		</p>
-		{{end}}
 	</div>
-</div>
+	{{end}}
+{{end}}
 
 {{if .NewComers}}
 <div class="box">
-	<div class="cell first"><strong>{{i18n .Lang "sidebar.new_comers_notice"}}</strong></div>
-	<div class="cell last">
+	<div class="box-heading">{{i18n .Lang "sidebar.new_comers_notice"}}</div>
+	<div class="box-body">
 		<ul class="sidebar-list">
 			{{range .NewComers}}
 			<li><a href="{{.Url}}">{{.Name}}</a></li>
@@ -68,8 +23,8 @@
 
 {{if .NewBestPosts}}
 <div class="box">
-	<div class="cell first"><strong>{{i18n .Lang "post.post_new_best"}}</strong></div>
-	<div class="cell last">
+	<div class="box-heading">{{i18n .Lang "post.post_new_best"}}</div>
+	<div class="box-body">
 		<ul class="sidebar-list">
 			{{range .NewBestPosts}}
 				<li><a href="{{.Link}}">{{.Title}}</a></li>
@@ -80,8 +35,8 @@
 {{end}}
 {{if .MostReplysPosts}}
 <div class="box">
-	<div class="cell first"><strong>{{i18n .Lang "post.post_most_replys"}}</strong></div>
-	<div class="cell last">
+	<div class="box-heading">{{i18n .Lang "post.post_most_replys"}}</div>
+	<div class="box-body">
 		<ul class="sidebar-list">
 			{{range .MostReplysPosts}}
 				<li><a href="{{.Link}}">{{.Title}}</a></li>
@@ -93,11 +48,11 @@
 
 {{if .MobileApps}}
 <div class="box">
-	<div class="cell first"><strong>{{i18n .Lang "mobile_app"}}</strong></div>
-	<div class="cell last">
+	<div class="box-heading">{{i18n .Lang "mobile_app"}}</div>
+	<div class="box-body">
 		<ul class="sidebar-list">
 			{{range .MobileApps}}
-			<li><a href="{{.Url}}">{{.Name}}</a></li>
+			<li><a target="_blank" href="{{.Url}}">{{.Name}}</a></li>
 			{{end}}
 		</ul>
 	</div>
@@ -106,11 +61,11 @@
 
 {{if .OpenSources}}
 <div class="box">
-	<div class="cell first"><strong>{{i18n .Lang "open_source"}}</strong></div>
-	<div class="cell last">
+	<div class="box-heading">{{i18n .Lang "open_source"}}</div>
+	<div class="box-body">
 		<ul class="sidebar-list">
 			{{range .OpenSources}}
-			<li><a href="{{.Url}}">{{.Name}}</a></li>
+			<li><a target="_blank" href="{{.Url}}">{{.Name}}</a></li>
 			{{end}}
 		</ul>
 	</div>
@@ -118,12 +73,12 @@
 {{end}}
 
 {{if .FriendLinks}}
-<div class="box">
-	<div class="cell first"><strong>{{i18n .Lang "sidebar.frined_links"}}</strong></div>
-	<div class="cell last">
+<div class="box last">
+	<div class="box-heading">{{i18n .Lang "sidebar.frined_links"}}</div>
+	<div class="box-body">
 		<ul class="sidebar-list">
 			{{range .FriendLinks}}
-			<li><a href="{{.Url}}">{{.Name}}</a></li>
+			<li><a target="_blank" href="{{.Url}}">{{.Name}}</a></li>
 			{{end}}
 		</ul>
 	</div>

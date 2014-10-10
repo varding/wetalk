@@ -6,29 +6,44 @@
 {{end}}
 {{define "body"}}
 <div class="row">
-    <div id="content" class="col-md-8">
+    <div id="content" class="col-md-9">
     	<div class="box">
-            <div class="cell breadcrumb first">
-                <a href="{{.AppUrl}}"><i class="icon icon-home"></i></a><i class="divider icon-angle-right"></i>{{i18n .Lang "notice.user_notice"}}
-                <span class="pull-right">
-                </span>
-            </div>
+            <ol class="breadcrumb">
+                <li><a href="{{.AppUrl}}"><span class="glyphicon glyphicon-home"></span></a></li>
+                <li><a href="{{.AppUrl}}notification">{{i18n .Lang "notice.user_notice"}}</a></li>
+            </ol>
             {{if .paginator.Nums}}
                 <div class="notice-list">
                     {{template "post/component/notice-list.html" dict "root" . "Notifications" .Notifications}}
-                </div>
-                <div class="cell last">
+                    <div class="notice-pg">
                     {{template "base/paginator_pn.html" .}}
+                    </div>
                 </div>
             {{else}}
-                <div class="cell last">
+                <div class="">
                     <div class="text-center">{{i18n .Lang "notice.not_found_notice"}}</div>
                 </div>
             {{end}}
 	   </div>
     </div>
-    <div id="sidebar" class="col-md-4">
-        {{template "post/component/sidebar.html" .}}
+    <div id="sidebar" class="col-md-3">
+       
     </div>
 </div>
+{{end}}
+{{if .IsLogin}}
+<script type="text/javascript">
+    (function($){
+        $(document).on('click', '[rel=notice_clear]', function(){
+            var btn=$(this);
+            $.post('/api/notice/clear', {}).complete(function(data){
+                if(data.success){
+                    
+                }else{
+                    window.location.reload();
+                }    
+            });
+        });
+    })(jQuery);
+</script>
 {{end}}

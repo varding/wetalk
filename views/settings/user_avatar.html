@@ -26,10 +26,11 @@
     	</div>
         <div class="col-md-9">
             <div class="box">
-                <div class="cell first breadcrumb">
-                    <a href="{{.AppUrl}}"><i class="icon icon-home"></i></a><i class="divider icon-angle-right"></i><a href="">{{i18n .Lang "auth.user_avatar"}}</a>
-                </div>
-                <div class="cell last slim">
+                <ol class="breadcrumb">
+                    <li><a href="{{.AppUrl}}"><span class="glyphicon glyphicon-home"></a></li>
+                    <li><a href="">{{i18n .Lang "auth.user_avatar"}}</a></li>
+                </ol>
+                <div class="">
                     {{if .flash.NeedActive}}
                     <div class="alert alert-info">
                         <h4>{{i18n .Lang "auth.need_active"}}</h4>
@@ -53,7 +54,7 @@
                                 {{template "base/form/fields.html" .UserAvatarFormSets}}
 
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">{{i18n .Lang "auth.user_avatar_save"}}&nbsp;&nbsp;<i class="icon-chevron-sign-right"></i></button>
+                                    <button type="submit" class="btn btn-primary">{{i18n .Lang "auth.user_avatar_save"}} <span class="glyphicon glyphicon-circle-arrow-right"></span></button>
                                 </div>
                             </form>
                         </div>

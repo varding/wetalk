@@ -92,7 +92,9 @@ func main() {
 	// Register routers.
 	posts := new(post.PostListRouter)
 	beego.Router("/", posts, "get:Home")
+	beego.Router("/:sortSlug(recent|hot|cold)", posts, "get:Navs")
 	beego.Router("/category/:slug", posts, "get:Category")
+	beego.Router("/category/:catSlug/:sortSlug(recent|hot|cold)", posts, "get:CatNavs")
 	beego.Router("/topic/:slug", posts, "get:Topic;post:TopicSubmit")
 
 	postR := new(post.PostRouter)

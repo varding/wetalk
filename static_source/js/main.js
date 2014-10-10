@@ -267,6 +267,25 @@
 				}
 			});
 		}
-	});
+	}); 
 
+	$(document).ready(function(){
+		//scroll top
+		$(window).bind("scroll", function(){
+	      var scrollTopNum = $(document).scrollTop(),
+	          winHeight = $(window).height(),
+	          returnTop = $("div.return-top");
+
+	      (scrollTopNum > 0) ? returnTop.fadeIn("fast") : returnTop.fadeOut("fast");
+
+	      if (!-[1,]&&!window.XMLHttpRequest) {
+	          returnTop.css("top", scrollTopNum + winHeight - 200);
+	      }
+
+		});
+
+		$("div.return-top").click(function() {
+		      $("html, body").animate({ scrollTop: 0 }, 100);
+		});
+	});
 })(jQuery);

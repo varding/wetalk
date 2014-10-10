@@ -76,16 +76,6 @@ func (form *RegisterForm) Helps() map[string]string {
 	}
 }
 
-func (form *RegisterForm) Placeholders() map[string]string {
-	return map[string]string{
-		"UserName":   "auth.plz_enter_username",
-		"Email":      "auth.plz_enter_email",
-		"Password":   "auth.plz_enter_password",
-		"PasswordRe": "auth.plz_reenter_password",
-		"Captcha":    "auth.plz_enter_captcha",
-	}
-}
-
 // Login form
 type LoginForm struct {
 	UserName string `valid:"Required"`

@@ -4,74 +4,74 @@
 {{define "body"}}
 <div class="row">
     <div id="content" class="col-md-9">
-        <div class="box">
-            <div class="cell first breadcrumb last">
-                <a href="{{.AppUrl}}"><i class="icon icon-home"></i></a><i class="divider icon-angle-right"></i><a href="{{.Post.Category.Link}}">{{i18n .Lang (print "category." .Post.Category.Name)}}</a><i class="divider icon-angle-right"></i><a href="{{.Post.Topic.Link}}">{{.Post.Topic.Name}}</a>
-                <span class="pull-right">
-                </span>
-            </div>
-            <div class="post-show">
-                <div class="cell first slim">
-                    <div class="avatar pull-right">
-                        <a href="{{.Post.User.Link}}" title="{{.Post.User.NickName}}">
-                            <img class="large" src="{{.Post.User.AvatarLink64}}">
-                        </a>
-                    </div>
-                    <h1 class="post-title">
-                         {{.Post.Title}}<i id="post-best-flag" class="icon-bookmark color-red" style="{{if not .Post.IsBest}}display:none;{{end}}"></i>
-                    </h1>
-                    <div class="post-meta">
-                        <a  class="tag" href="{{.Post.Category.Link}}">{{i18n .Lang (print "category." .Post.Category.Name)}}</a> • <a  class="tag" href="{{.Post.Topic.Link}}">{{.Post.Topic.Name}}</a> • {{i18n .Lang "post.post_author"}} <a  href="{{.Post.User.Link}}">{{.Post.User.NickName}}</a> • <span class="time">{{timesince .Lang .Post.Created}}</span>{{if .Post.Replys}}{{if .Post.LastReply}} • <span class="last-reply">{{i18n .Lang "post.last_reply"}} <a href="{{.Post.LastReply.Link}}">{{.Post.LastReply.NickName}}</a></span> • <span class="time">{{timesince .Lang .Post.LastReplied}}</span>{{end}}{{end}}
-                    </div>
+        <ol class="breadcrumb">
+            <li><a href="{{.AppUrl}}"><span class="glyphicon glyphicon-home"></span></a></li>
+            <li><a href="{{.Post.Category.Link}}">{{i18n .Lang (print "category." .Post.Category.Name)}}</a></li>
+            <li><a href="{{.Post.Topic.Link}}">{{.Post.Topic.Name}}</a></li>
+        </ol>
+        <div class="post-show">
+            <div class="post-main">
+                <div class="avatar pull-right">
+                    <a href="{{.Post.User.Link}}" title="{{.Post.User.NickName}}">
+                        <img class="large" src="{{.Post.User.AvatarLink64}}">
+                    </a>
                 </div>
-                {{if .flash.CanNotEditPost}}
-                    <div class="alert alert-warning" style="padding:5px;border-radius:0;">
-                        {{i18n .Lang "post.post_edit_locked"}}
-                    </div>
-                {{end}}
-                <div class="cell last slim">
-                    {{if ne (datetime .Post.Updated) (datetime .Post.Created)}}
-                        <p class="post-meta pull-right">
-                            {{if .Post.LastAuthor}}<a  href="{{.Post.LastAuthor.Link}}">{{.Post.LastAuthor.NickName}}</a> • {{end}}{{i18n .Lang "post.modified_on"}} {{timesince .Lang .Post.Updated}} / {{.Post.Updated|datetimes}}
-                        </p>
-                    {{end}}
-                    {{if .IsLogin}}
-                        <p>
-                        {{if eq .Post.User.Id .User.Id}}
-                            {{if .Post.CanEdit}}
-                            <a class="btn btn-danger post-action-link" href="{{.Post.Link}}/edit"><i class="icon icon-edit"></i>{{i18n .Lang "post.post_edit"}}</a>
-                            {{end}}
-                        {{end}}
-                        {{if .User.IsAdmin}}
-                            <a class="btn btn-warning post-action-link" href="javascript:void(0)" rel="toggle-post-best">{{if .Post.IsBest}}{{i18n .Lang "post.remove_best"}}{{else}}{{i18n .Lang "post.set_best"}}{{end}}</a>
-                            <input type="hidden" id="remove-post-best-text" value='{{i18n .Lang "post.remove_best"}}'/>
-                            <input type="hidden" id="set-post-best-text" value='{{i18n .Lang "post.set_best"}}'/>
-                        {{end}}
-                         <a class="btn btn-info post-action-link" href="javascript:void(0)" rel="toggle-post-fav">{{if .IsPostFav}}{{i18n .Lang "post.remove_fav"}}{{else}}{{i18n .Lang "post.set_fav"}}{{end}}</a>
-                        <input type="hidden" id="remove-post-fav-text" value='{{i18n .Lang "post.remove_fav"}}'/>
-                        <input type="hidden" id="set-post-fav-text" value='{{i18n .Lang "post.set_fav"}}'/>
-                        </p>
-                    {{end}}
-                    <span class="clearfix"></span>
-                    <div class="post-content markdown">
-                        {{.Post.GetContentCache|str2html}}
-                    </div>
-                    <div class="pull-right">
-                        {{template "post/component/share.html"}}
-                    </div>
-                    <span class="clearfix"></span>
+                <h1 class="post-title">
+                     {{.Post.Title}}<span id="post-best-flag" class="glyphicon glyphicon-bookmark color-red" style="{{if not .Post.IsBest}}display:none;{{end}}"></span>
+                </h1>
+                <div class="post-meta">
+                    <a  class="tag" href="{{.Post.Category.Link}}">{{i18n .Lang (print "category." .Post.Category.Name)}}</a> • <a  class="tag" href="{{.Post.Topic.Link}}">{{.Post.Topic.Name}}</a> • {{i18n .Lang "post.post_author"}} <a  href="{{.Post.User.Link}}">{{.Post.User.NickName}}</a> • <span class="time">{{timesince .Lang .Post.Created}}</span>{{if .Post.Replys}}{{if .Post.LastReply}} • <span class="last-reply">{{i18n .Lang "post.last_reply"}} <a href="{{.Post.LastReply.Link}}">{{.Post.LastReply.NickName}}</a></span> • <span class="time">{{timesince .Lang .Post.LastReplied}}</span>{{end}}{{end}}
                 </div>
             </div>
+            {{if .flash.CanNotEditPost}}
+                <div class="alert alert-warning" style="padding:5px;border-radius:0;">
+                    {{i18n .Lang "post.post_edit_locked"}}
+                </div>
+            {{end}}
+             
+            {{if ne (datetime .Post.Updated) (datetime .Post.Created)}}
+                <p class="post-meta post-meta-edit">
+                    {{if .Post.LastAuthor}}<a  href="{{.Post.LastAuthor.Link}}">{{.Post.LastAuthor.NickName}}</a> • {{end}}{{i18n .Lang "post.modified_on"}} {{timesince .Lang .Post.Updated}} / {{.Post.Updated|datetimes}}
+                </p>
+
+            {{end}}
+            {{if .IsLogin}}
+            <div class="post-action">
+                <div class="btn-group">
+                    {{if eq .Post.User.Id .User.Id}}
+                        {{if .Post.CanEdit}}
+                        <a class="btn btn-danger btn-sm" href="{{.Post.Link}}/edit"><i class="icon icon-edit"></i>{{i18n .Lang "post.post_edit"}}</a>
+                        {{end}}
+                    {{end}}
+                    {{if .User.IsAdmin}}
+                        <a class="btn btn-warning btn-sm" href="javascript:void(0)" rel="toggle-post-best">{{if .Post.IsBest}}{{i18n .Lang "post.remove_best"}}{{else}}{{i18n .Lang "post.set_best"}}{{end}}</a>
+                        <input type="hidden" id="remove-post-best-text" value='{{i18n .Lang "post.remove_best"}}'/>
+                        <input type="hidden" id="set-post-best-text" value='{{i18n .Lang "post.set_best"}}'/>
+                    {{end}}
+                     <a class="btn btn-info btn-sm" href="javascript:void(0)" rel="toggle-post-fav">{{if .IsPostFav}}{{i18n .Lang "post.remove_fav"}}{{else}}{{i18n .Lang "post.set_fav"}}{{end}}</a>
+
+                    <input type="hidden" id="remove-post-fav-text" value='{{i18n .Lang "post.remove_fav"}}'/>
+                    <input type="hidden" id="set-post-fav-text" value='{{i18n .Lang "post.set_fav"}}'/>
+                </div>
+            </div>
+            {{end}}
+            <div class="post-content markdown">
+                {{.Post.GetContentCache|str2html}}
+            </div>
+            <div class="post-share pull-right">
+                {{template "post/component/share.html"}}
+            </div>
+            <span class="clearfix"></span>
         </div>
-        <div class="box post-comments"{{if .IsLogin}} data-user="{{.User.UserName}}"{{end}}>
+        <div class="post-comments"{{if .IsLogin}} data-user="{{.User.UserName}}"{{end}}>
             {{if .CommentsNum}}
-                <div class="cell first breadcrumb">
-                    {{i18n .Lang "post.total_replies" .CommentsNum}}
+                <div class="breadcrumb">
+                    <div class="text-center">{{i18n .Lang "post.total_replies" .CommentsNum}}</div>
                 </div>
             {{end}}
             {{if .CommentsNum}}
                 {{range .Comments}}
-                    <div id="reply{{.Floor}}" class="cell comment" data-user="{{.User.UserName}}" data-user-nick="{{.User.NickName}}" data-floor="{{.Floor}}">
+                    <div id="reply{{.Floor}}" class="comment" data-user="{{.User.UserName}}" data-user-nick="{{.User.NickName}}" data-floor="{{.Floor}}">
                         <div class="avatar">
                             <a href="{{.User.Link}}">
                                 <img src="{{.User.AvatarLink48}}">
@@ -96,13 +96,13 @@
                     </div>
                 {{end}}
             {{else}}
-                <div class="cell last">
+                <div class="breadcrumb">
                     <div class="text-center">{{i18n .Lang "post.no_replies"}}</div>
                 </div>
             {{end}}
         </div>
         <div class="box">
-            <div class="cell first last">
+            <div class="">
                 {{if not .IsLogin}}
                     <div class="text-center"><a href="{{loginto .Post.Link}}" class="btn btn-primary">{{i18n .Lang "auth.need_login_to_reply"}}</a></div>
                 {{else if not .User.IsActive}}

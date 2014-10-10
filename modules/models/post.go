@@ -44,7 +44,7 @@ type Post struct {
 	Category     *Category `orm:"rel(fk)"`
 	Created      time.Time `orm:"auto_now_add"`
 	Updated      time.Time `orm:"auto_now;index"`
-	LastReplied  time.Time `orm:"auto_now;"`
+	LastReplied  time.Time `orm:"auto_now;null"`
 }
 
 func (m *Post) Insert() error {

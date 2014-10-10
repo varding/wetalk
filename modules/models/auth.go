@@ -39,7 +39,7 @@ type Setting struct {
 type User struct {
 	Id          int
 	UserName    string    `orm:"size(30);unique"`
-	NickName    string    `orm:"size(30)"`
+	NickName    string    `orm:"size(30);unique"`
 	Password    string    `orm:"size(128)"`
 	AvatarType  int       `orm:"default(1)"`
 	AvatarKey   string    `orm:"size(50)"`
