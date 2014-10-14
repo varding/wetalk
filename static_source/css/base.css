@@ -18,8 +18,23 @@ body,h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
                 sans-serif;
 }
 
-#front .container {
+#front .container ,#footer .container{
   max-width: 1024px;
+  margin: 0 auto;
+}
+
+#footer{
+  margin-top:20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+#footer table.basic-info{
+  width: 100%;
+}
+#footer table.basic-info a{
+  text-decoration: underline;
+  color: #009a61;
 }
 
 a{

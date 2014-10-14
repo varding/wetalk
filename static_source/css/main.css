@@ -370,7 +370,7 @@
 
 .topic-info .topic-img img {
   width: 80px;
-  border-radius: 5px;
+  border:1px solid #eee;
 }
 
 .topic-info .topic-intro {
