@@ -20,7 +20,7 @@ import (
 	"github.com/beego/social-auth"
 
 	"github.com/astaxie/beego/orm"
-	_ "github.com/beego/wetalk/routers"
+	"github.com/beego/wetalk/routers"
 	"github.com/beego/wetalk/routers/auth"
 	"github.com/beego/wetalk/setting"
 	_ "github.com/go-sql-driver/mysql"
@@ -67,6 +67,8 @@ func main() {
 	}
 	beego.Info(beego.AppName, setting.APP_VER, setting.AppUrl)
 
+	//initialize the routers
+	routers.Initialize()
 	if !setting.IsProMode {
 		beego.SetStaticPath("/static_source", "static_source")
 		beego.DirectoryIndex = true

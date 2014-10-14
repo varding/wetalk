@@ -28,7 +28,7 @@ import (
 	"github.com/beego/wetalk/setting"
 )
 
-func init() {
+func Initialize() {
 	/* Add Filters */
 	if setting.QiniuServiceEnabled {
 		beego.InsertFilter("/img/*", beego.BeforeRouter, attachment.QiniuImageFilter)
