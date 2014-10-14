@@ -128,7 +128,7 @@ func (this *PostListRouter) Home() {
 	qs := models.Posts()
 	cnt, _ := models.CountObjects(qs)
 	pager := this.SetPaginator(setting.PostCountPerPage, cnt)
-	qs = qs.OrderBy("-Created").Limit(setting.PostCountPerPage, pager.Offset()).RelatedSel()
+	qs = qs.OrderBy("-LastReplied").Limit(setting.PostCountPerPage, pager.Offset()).RelatedSel()
 
 	models.ListObjects(qs, &posts)
 	this.Data["Posts"] = posts
@@ -199,7 +199,7 @@ func (this *PostListRouter) Category() {
 	qs := models.Posts().Filter("Category", &cat)
 	cnt, _ := models.CountObjects(qs)
 	pager := this.SetPaginator(setting.PostCountPerPage, cnt)
-	qs = qs.OrderBy("-Created").Limit(setting.PostCountPerPage, pager.Offset()).RelatedSel()
+	qs = qs.OrderBy("-LastReplied").Limit(setting.PostCountPerPage, pager.Offset()).RelatedSel()
 	var posts []models.Post
 	models.ListObjects(qs, &posts)
 
