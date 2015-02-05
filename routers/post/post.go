@@ -552,9 +552,9 @@ func (this *PostRouter) EditPost() {
 		return
 	}
 
-	if !postMd.CanEdit {
-		this.Redirect(postMd.Link(), 302)
-	}
+	//if !postMd.CanEdit {
+	//	this.Redirect(postMd.Link(), 302)
+	//}
 	form := post.PostForm{}
 	form.SetFromPost(&postMd)
 	post.ListTopics(&form.Topics)
