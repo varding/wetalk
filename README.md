@@ -5,8 +5,8 @@ An open source project for Gopher community.
 ### Usage
 
 ```
-go get -u github.com/beego/wetalk
-cd $GOPATH/src/github.com/beego/wetalk
+go get -u github.com/varding/wetalk
+cd $GOPATH/src/github.com/varding/wetalk
 ```
 
 I suggest you [update all Dependencies](#dependencies)

@@ -16,7 +16,7 @@ package post
 
 import (
 	"fmt"
-	"github.com/beego/wetalk/routers/base"
+	"github.com/varding/wetalk/routers/base"
 )
 
 type SearchRouter struct {

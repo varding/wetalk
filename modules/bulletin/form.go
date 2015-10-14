@@ -2,9 +2,9 @@ package bulletin
 
 import (
 	//"github.com/astaxie/beego/validation"
-	"github.com/beego/wetalk/modules/models"
-	"github.com/beego/wetalk/modules/utils"
-	"github.com/beego/wetalk/setting"
+	"github.com/varding/wetalk/modules/models"
+	"github.com/varding/wetalk/modules/utils"
+	"github.com/varding/wetalk/setting"
 )
 
 type BulletinAdminForm struct {

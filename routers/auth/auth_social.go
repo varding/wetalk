@@ -20,11 +20,11 @@ import (
 
 	"github.com/beego/social-auth"
 
-	"github.com/beego/wetalk/modules/auth"
-	"github.com/beego/wetalk/modules/models"
-	"github.com/beego/wetalk/modules/utils"
-	"github.com/beego/wetalk/routers/base"
-	"github.com/beego/wetalk/setting"
+	"github.com/varding/wetalk/modules/auth"
+	"github.com/varding/wetalk/modules/models"
+	"github.com/varding/wetalk/modules/utils"
+	"github.com/varding/wetalk/routers/base"
+	"github.com/varding/wetalk/setting"
 )
 
 type socialAuther struct {

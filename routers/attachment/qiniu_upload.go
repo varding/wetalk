@@ -15,7 +15,7 @@
 package attachment
 
 import (
-	"github.com/beego/wetalk/setting"
+	"github.com/varding/wetalk/setting"
 	"io/ioutil"
 	"net/http"
 	"path"
@@ -25,10 +25,10 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
 
-	"github.com/beego/wetalk/modules/attachment"
-	"github.com/beego/wetalk/modules/models"
-	"github.com/beego/wetalk/modules/utils"
-	"github.com/beego/wetalk/routers/base"
+	"github.com/varding/wetalk/modules/attachment"
+	"github.com/varding/wetalk/modules/models"
+	"github.com/varding/wetalk/modules/utils"
+	"github.com/varding/wetalk/routers/base"
 )
 
 type QiniuUploadRouter struct {

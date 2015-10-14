@@ -2,7 +2,7 @@ package api
 
 import (
 	"github.com/astaxie/beego/orm"
-	"github.com/beego/wetalk/modules/models"
+	"github.com/varding/wetalk/modules/models"
 )
 
 func (this *ApiRouter) Post() {

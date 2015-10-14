@@ -15,8 +15,8 @@
 package page
 
 import (
-	"github.com/beego/wetalk/modules/models"
-	"github.com/beego/wetalk/routers/base"
+	"github.com/varding/wetalk/modules/models"
+	"github.com/varding/wetalk/routers/base"
 )
 
 type PageRouter struct {

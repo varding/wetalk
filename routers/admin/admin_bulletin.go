@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	"github.com/beego/wetalk/modules/bulletin"
-	"github.com/beego/wetalk/modules/models"
-	"github.com/beego/wetalk/modules/utils"
+	"github.com/varding/wetalk/modules/bulletin"
+	"github.com/varding/wetalk/modules/models"
+	"github.com/varding/wetalk/modules/utils"
 )
 
 type BulletinAdminRouter struct {

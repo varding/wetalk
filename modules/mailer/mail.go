@@ -15,8 +15,8 @@
 package mailer
 
 import (
-	"github.com/beego/wetalk/modules/models"
-	"github.com/beego/wetalk/setting"
+	"github.com/varding/wetalk/modules/models"
+	"github.com/varding/wetalk/setting"
 )
 
 // Create New mail message use MailFrom and MailUser

@@ -22,9 +22,9 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 
-	"github.com/beego/wetalk/modules/models"
-	"github.com/beego/wetalk/modules/utils"
-	"github.com/beego/wetalk/setting"
+	"github.com/varding/wetalk/modules/models"
+	"github.com/varding/wetalk/modules/utils"
+	"github.com/varding/wetalk/setting"
 )
 
 func ListPostsOfCategory(cat *models.Category, posts *[]models.Post) (int64, error) {

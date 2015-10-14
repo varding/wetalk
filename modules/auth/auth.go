@@ -31,10 +31,10 @@ import (
 	"github.com/astaxie/beego/session"
 	"github.com/beego/i18n"
 
-	"github.com/beego/wetalk/modules/models"
-	"github.com/beego/wetalk/modules/utils"
-	"github.com/beego/wetalk/setting"
-	qio "github.com/qiniu/api/io"
+	"github.com/varding/wetalk/modules/models"
+	"github.com/varding/wetalk/modules/utils"
+	"github.com/varding/wetalk/setting"
+	qio "github.com/qiniu/api.v6/io"
 )
 
 // CanRegistered checks if the username or e-mail is available.

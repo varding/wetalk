@@ -20,11 +20,11 @@ import (
 	"github.com/beego/social-auth"
 
 	"github.com/astaxie/beego/orm"
-	"github.com/beego/wetalk/routers"
-	"github.com/beego/wetalk/routers/auth"
-	"github.com/beego/wetalk/setting"
+	"github.com/varding/wetalk/routers"
+	"github.com/varding/wetalk/routers/auth"
+	"github.com/varding/wetalk/setting"
 	_ "github.com/go-sql-driver/mysql"
-	. "github.com/qiniu/api/conf"
+	. "github.com/qiniu/api.v6/conf"
 )
 
 // We have to call a initialize function manully
@@ -76,7 +76,8 @@ func main() {
 
 	if beego.RunMode == "dev" {
 		//enable debug for orm
-		orm.Debug = false
+		//orm.Debug = false
+		orm.Debug = true
 	}
 
 	// For all unknown pages.

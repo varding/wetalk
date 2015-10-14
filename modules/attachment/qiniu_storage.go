@@ -2,9 +2,9 @@ package attachment
 
 import (
 	"fmt"
-	"github.com/beego/wetalk/modules/models"
-	"github.com/beego/wetalk/modules/utils"
-	"github.com/qiniu/api/io"
+	"github.com/varding/wetalk/modules/models"
+	"github.com/varding/wetalk/modules/utils"
+	"github.com/qiniu/api.v6/io"
 	"image"
 	"image/gif"
 	"image/jpeg"

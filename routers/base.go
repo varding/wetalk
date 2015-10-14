@@ -18,14 +18,14 @@ package routers
 import (
 	"fmt"
 	"github.com/astaxie/beego"
-	"github.com/beego/wetalk/routers/admin"
-	"github.com/beego/wetalk/routers/api"
-	"github.com/beego/wetalk/routers/attachment"
-	"github.com/beego/wetalk/routers/auth"
-	"github.com/beego/wetalk/routers/base"
-	"github.com/beego/wetalk/routers/page"
-	"github.com/beego/wetalk/routers/post"
-	"github.com/beego/wetalk/setting"
+	"github.com/varding/wetalk/routers/admin"
+	"github.com/varding/wetalk/routers/api"
+	"github.com/varding/wetalk/routers/attachment"
+	"github.com/varding/wetalk/routers/auth"
+	"github.com/varding/wetalk/routers/base"
+	"github.com/varding/wetalk/routers/page"
+	"github.com/varding/wetalk/routers/post"
+	"github.com/varding/wetalk/setting"
 )
 
 func Initialize() {
